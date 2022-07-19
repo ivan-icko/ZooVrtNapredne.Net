@@ -20,6 +20,7 @@ namespace WebApplication.Controllers
 
 
 
+
         public IActionResult Index()
         {
             var model = uow.AnimalRepository.GetAll();
