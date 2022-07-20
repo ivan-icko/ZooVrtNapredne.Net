@@ -88,6 +88,8 @@ namespace WebApplication.Controllers
             uow.AnimalRepository.Update(new Animal() {Id=animal.Id,Type=animal.Type, Age=animal.Age});
             uow.Save();
             return RedirectToAction("Index");
+
         }
     }
+
 }
