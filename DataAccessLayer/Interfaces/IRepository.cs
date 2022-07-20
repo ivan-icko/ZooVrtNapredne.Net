@@ -15,6 +15,7 @@ namespace DataAccessLayer.Interfaces
             public void Delete(TEntity entity);
             public List<TEntity> SearchBy(Expression<Func<TEntity, bool>> predicate);
             public TEntity SearchById(TEntity entity);
+            public TEntity SearchById(int id);
             public List<TEntity> GetAll();
             public void Update(TEntity entity);
         }

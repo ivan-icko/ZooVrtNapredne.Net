@@ -20,13 +20,15 @@ namespace DataAccessLayer.Implementations
 
         public void Add(Animal entity)
         {
-            throw new NotImplementedException();
+            context.Add(entity);
         }
 
         public void Delete(Animal entity)
         {
-            throw new NotImplementedException();
+            context.Remove(entity);
         }
+
+       
 
         public List<Animal> GetAll()
         {
@@ -44,9 +46,14 @@ namespace DataAccessLayer.Implementations
             throw new NotImplementedException();
         }
 
+        public Animal SearchById(int id)
+        {
+            return context.Animals.First(a => a.Id == id);
+        }
+
         public void Update(Animal entity)
         {
-            throw new NotImplementedException();
+            context.Update(entity);
         }
     }
 }

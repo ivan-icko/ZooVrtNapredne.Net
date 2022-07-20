@@ -8,28 +8,36 @@
 <br />
 <br />
 
+<br />
 <div class="row">
-    <div class="col-12">
-        <h2 class="text-info">Makes of veicle</h2>
+    <div class="col-6">
+        <h2 class="text-info">Zoo</h2>
     </div>
     <div class="col-6 text-right">
-        <a class=" btn btn-info" asp-action="Create"> Add new make</a>
+        <a class=" btn btn-info" asp-action="Create"> Add new animal</a>
     </div>
     <br />
-    <div>
+    <div class="col-12">
         <table class="table table-striped border">
             <tr class="table-info">
                 <th>
-
+                    Zivotinja
                 </th>
                 <th></th>
             </tr>
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
-            <tr>
-                <td>@item.Type</td>
-                <td class="text-right">Edit | Delete</td>
-            </tr>
+                <tr>
+                    <td>@item.Type</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <a type="button" class="btn btn-primary" href="Make/Edit/@item.Id">Edit</a>
+                            <form method="post" action="Delete">
+                                <input onclick="if (!confirm('Da li ste sigurni da zelite da obrisete zivotinju?')){return false}" type="submit" class="btn btn-danger rounded=0"  asp-action="Delete" asp-route-id="@item.Id" value="Delete"/>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
             }
         </table>
     </div>
