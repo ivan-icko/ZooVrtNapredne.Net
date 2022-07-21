@@ -33,7 +33,7 @@ namespace DataAccessLayer.Implementations
         public List<Animal> GetAll()
         {
             List<Animal> animals = context.Animals.ToList();
-            return context.Animals.ToList();
+            return context.Animals.Include(v => v.Vet).ToList();
         }
 
         public List<Animal> SearchBy(Expression<Func<Animal, bool>> predicate)
@@ -43,7 +43,7 @@ namespace DataAccessLayer.Implementations
 
         public Animal SearchById(Animal entity)
         {
-            throw new NotImplementedException();
+            return context.Animals.Include(v=>v.Vet).First(a => a.Id == entity.Id);
         }
 
         public Animal SearchById(int id)

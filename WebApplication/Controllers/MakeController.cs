@@ -43,7 +43,8 @@ namespace WebApplication.Controllers
             uow.AnimalRepository.Add(new Animal()
             {
                 Type = Animal.Type,
-                Age = Animal.Age
+                Age = Animal.Age,
+                VetId=1
             });
 
             uow.Save();
@@ -72,7 +73,7 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-            AnimalVewModel model = new AnimalVewModel() { Id = animal.Id, Age = animal.Age, Type = animal.Type };
+            AnimalVewModel model = new AnimalVewModel() { Id = animal.Id, Age = animal.Age, Type = animal.Type};
             return View(model);
         }
 
@@ -85,7 +86,7 @@ namespace WebApplication.Controllers
                 return View(animal);
             }
 
-            uow.AnimalRepository.Update(new Animal() {Id=animal.Id,Type=animal.Type, Age=animal.Age});
+            uow.AnimalRepository.Update(new Animal() {Id=animal.Id,Type=animal.Type, Age=animal.Age,VetId=1});
             uow.Save();
             return RedirectToAction("Index");
 

@@ -15,6 +15,7 @@ namespace Domain
 
 
         public DbSet<Animal> Animals { get; set; }
+        public DbSet<Vet> Vets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,6 +25,10 @@ namespace Domain
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Animal>().ToTable("Animals");
+            
+
+
+
         }
     }
 }

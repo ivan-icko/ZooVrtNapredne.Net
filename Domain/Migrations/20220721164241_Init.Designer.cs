@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(AnimalContext))]
-    [Migration("20220719190857_AddedAgeAnimals")]
-    partial class AddedAgeAnimals
+    [Migration("20220721164241_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,9 +33,45 @@ namespace Domain.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("VetId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("VetId");
+
                     b.ToTable("Animals");
+                });
+
+            modelBuilder.Entity("Domain.Vet", b =>
+                {
+                    b.Property<int>("VetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("VName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VetId");
+
+                    b.ToTable("Vets");
+                });
+
+            modelBuilder.Entity("Domain.Animal", b =>
+                {
+                    b.HasOne("Domain.Vet", "Vet")
+                        .WithMany("Animals")
+                        .HasForeignKey("VetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vet");
+                });
+
+            modelBuilder.Entity("Domain.Vet", b =>
+                {
+                    b.Navigation("Animals");
                 });
 #pragma warning restore 612, 618
         }

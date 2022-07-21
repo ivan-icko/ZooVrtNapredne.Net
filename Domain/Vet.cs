@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Animal
+    public class Vet
     {
-        public int Id { get; set; }
-        public string Type { get; set; }
-        public int Age { get; set; }
-
         public int VetId { get; set; }
-        public Vet Vet { get; set; }
+        public String VName { get; set; }
+
+        public List<Animal> Animals { get; set; }
     }
 }

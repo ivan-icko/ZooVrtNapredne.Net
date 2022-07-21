@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Implementations;
+using DataAccessLayer.Interfaces;
 using Domain;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,11 @@ namespace DataAccessLayer.UnitOfWork
         {
             this.context = context;
             AnimalRepository = new AnimalRepository(context);
+            VetRepository = new VetRepository(context);
             
         }
         public IAnimalRepository AnimalRepository { get; set; } 
+        public IVetRepository VetRepository { get; set; }
 
         public void Save()
         {

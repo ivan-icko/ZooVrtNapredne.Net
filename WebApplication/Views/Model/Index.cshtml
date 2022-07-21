@@ -1,4 +1,4 @@
-﻿@model List<WebApplication.Models.AnimalVewModel>
+﻿@model IEnumerable<WebApplication.Models.ModelViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,14 +14,14 @@
         <h2 class="text-info">Zoo</h2>
     </div>
     <div class="col-6 text-right">
-        <a class=" btn btn-info" asp-action="Create">Dodaj zivotinju</i></a>
+        <a class=" btn btn-info" asp-action="Create">Dodaj novi model</i></a>
     </div>
     <br />
     <div class="col-12">
         <table class="table table-striped border">
             <tr class="table-info">
                 <th>
-                    Zivotinja
+                    
                 </th>
                 <th></th>
             </tr>
@@ -29,11 +29,12 @@
             {
                 <tr>
                     <td>@item.Type</td>
+                    <td>@item.VetName</td>
                     <td class="text-right">
                         <div class="btn-group">
-                            <a type="button" class="btn btn-primary" href="Make/Edit/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a type="button" class="btn btn-primary" href="Model/Edit/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
                             <form method="post" action="Delete">
-                                <button onclick="if (!confirm('Da li ste sigurni da zelite da obrisete zivotinju?')){return false}" type="submit" class="btn btn-danger rounded=0"  asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash-can"></i></button>
+                                <button onclick="if (!confirm('Da li ste sigurni da zelite da obrisete zivotinju?')){return false}" type="submit" class="btn btn-danger rounded=0" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash-can"></i></button>
                             </form>
                         </div>
                     </td>
