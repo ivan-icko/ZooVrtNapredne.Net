@@ -12,10 +12,12 @@ namespace WebApplication.Controllers
     public class AuthController : Controller
     {
         private readonly UserManager<Employee> manager;
+        private readonly SignInManager<Employee> signIn;
 
-        public AuthController(UserManager<Employee> manager)
+        public AuthController(UserManager<Employee> manager,SignInManager<Employee> signIn)
         {
             this.manager = manager;
+            this.signIn = signIn;
         }
 
 
@@ -26,6 +28,7 @@ namespace WebApplication.Controllers
             {
                 FirstName = register.FirstName,
                 LastName = register.LastName,
+                UserName= register.Username
 
             };
 
@@ -56,11 +59,19 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+
             return View();
         }
         [HttpPost]
-        public IActionResult Login([FromForm] RegisterViewModel register)
+        public async Task<IActionResult> Login([FromForm] RegisterViewModel login)
         {
+           var result =  await signIn.PasswordSignInAsync(login.Username, login.Password,false,false);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 

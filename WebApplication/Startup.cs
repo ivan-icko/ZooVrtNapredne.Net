@@ -36,7 +36,9 @@ namespace WebApplication
 
             /* services.AddDefaultIdentity<Employee>().AddRoles<IdentityRole>().AddEntityFrameworkStores<AnimalContext>();*/
 
-            services.AddIdentity<Employee, IdentityRole<int>>().AddEntityFrameworkStores<AnimalContext>();
+            services.AddIdentity<Employee, IdentityRole<int>>(opt=> {
+                opt.User.AllowedUserNameCharacters = null;
+            }).AddEntityFrameworkStores<AnimalContext>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.ConfigureApplicationCookie(opt => {
