@@ -20,9 +20,9 @@ namespace WebApplication.Controllers
 
         public IActionResult Index()
         {
-            var model = uow.AnimalRepository.GetAll();
+            var model = uow.VetRepository.GetAll();
             List<AnimalVewModel> list = new List<AnimalVewModel>();
-            list = model.Select(m => new AnimalVewModel() { Type = m.Type, Age = m.Age, Id = m.Id }).ToList();
+            list = model.Select(m => new AnimalVewModel() { VName = m.VName,Id = m.VetId }).ToList();
             return View(list);
         }
 
@@ -33,18 +33,16 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(AnimalVewModel Animal)
+        public IActionResult Create(AnimalVewModel vet)
         {
             if (!ModelState.IsValid)
             {
                 return Create();
             }
 
-            uow.AnimalRepository.Add(new Animal()
+            uow.VetRepository.Add(new Vet()
             {
-                Type = Animal.Type,
-                Age = Animal.Age,
-                VetId=1
+                VName = vet.VName
             });
 
             uow.Save();
@@ -54,13 +52,13 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var animal = uow.AnimalRepository.SearchById(id);
-            if (animal is null)
+            var vet = uow.VetRepository.SearchById(id);
+            if (vet is null)
             {
                 return NotFound();
             }
 
-            uow.AnimalRepository.Delete(animal);
+            uow.VetRepository.Delete(vet);
             uow.Save();
 
             return RedirectToAction("Index");
@@ -68,25 +66,27 @@ namespace WebApplication.Controllers
 
         public IActionResult Edit(int id)
         {
-            var animal = uow.AnimalRepository.SearchById(id);
-            if (animal is null)
+            var vet = uow.VetRepository.SearchById(id);
+            if (vet is null)
             {
                 return NotFound();
             }
-            AnimalVewModel model = new AnimalVewModel() { Id = animal.Id, Age = animal.Age, Type = animal.Type};
+            AnimalVewModel model = new AnimalVewModel() { VName = vet.VName, Id = vet.VetId};
             return View(model);
         }
 
 
         [HttpPost]
-        public IActionResult Edit(AnimalVewModel animal)
+        public IActionResult Edit(AnimalVewModel vet)
         {
             if (!ModelState.IsValid)
             {
-                return View(animal);
+                return View(vet);
             }
+            Vet v = uow.VetRepository.SearchById(vet.Id);
+            v.VName = vet.VName;
 
-            uow.AnimalRepository.Update(new Animal() {Id=animal.Id,Type=animal.Type, Age=animal.Age,VetId=1});
+            uow.VetRepository.Update(v);
             uow.Save();
             return RedirectToAction("Index");
 

@@ -26,7 +26,7 @@ namespace DataAccessLayer.Implementations
 
         public void Delete(Vet entity)
         {
-            throw new NotImplementedException();
+            context.Vets.Remove(entity);
         }
 
         public List<Vet> GetAll()
@@ -41,17 +41,17 @@ namespace DataAccessLayer.Implementations
 
         public Vet SearchById(Vet entity)
         {
-            throw new NotImplementedException();
+            return context.Vets.Find(entity);
         }
 
         public Vet SearchById(int id)
         {
-            throw new NotImplementedException();
+            return context.Vets.First(v => v.VetId == id);
         }
 
         public void Update(Vet entity)
         {
-            throw new NotImplementedException();
+            context.Vets.Update(entity);
         }
     }
 }
