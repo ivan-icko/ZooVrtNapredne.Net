@@ -15,7 +15,7 @@ namespace WebApplication.Controllers
         public readonly IUnitOfWork uow;
 
         [BindProperty]
-        public ModelViewModel ModelVM { get; set; }
+        public VetViewModel ModelVM { get; set; }
 
 
         public ModelController(IUnitOfWork uow)
@@ -29,18 +29,18 @@ namespace WebApplication.Controllers
         public IActionResult Index()
         {
             var model = uow.AnimalRepository.GetAll();
-            List<ModelViewModel> list = new List<ModelViewModel>();
-            list = model.Select(m => new ModelViewModel(){Type=m.Type,Age=m.Age,Id=m.Id,VetId=m.VetId,VetName=m.Vet.VName}).ToList();
+            List<VetViewModel> list = new List<VetViewModel>();
+            list = model.Select(m => new VetViewModel(){Type=m.Type,Age=m.Age,AnimalId=m.Id,VetId=m.VetId,VetName=m.Vet.VName}).ToList();
             return View(list);
         }
 
 
         public IActionResult Create()
         {
-            VetViewModel vm = new VetViewModel(){ };
-            var vets = uow.AnimalRepository.GetAll();
+            var vets = uow.VetRepository.GetAll();
+            VetViewModel vm = new VetViewModel();
 
-            vm.Animals = vets.Select(p => new SelectListItem(p.Type, p.Id.ToString())).ToList();
+            vm.Vets = vets.Select(p => new SelectListItem(p.VName, p.VetId.ToString())).ToList();
             return View(vm);
         }
 
@@ -52,29 +52,63 @@ namespace WebApplication.Controllers
                 return View();
             }
 
-            uow.VetRepository.Add(new Vet() { VName = v.VName,Animals=null }) ;
+            uow.AnimalRepository.Add(new Animal() { Type = v.Type,Age = v.Age, VetId = v.VetId}) ;
             uow.Save();
 
             return RedirectToAction("Index");
         }
 
+
+
         public IActionResult Edit(int id)
         {
             Animal a = uow.AnimalRepository.SearchById(new Animal() { Id = id });
-            var animals = uow.AnimalRepository.GetAll();
+            var vets = uow.VetRepository.GetAll();
 
-            VetViewModel model = new VetViewModel()
+            ModelVM= new VetViewModel()
             {
-                Animal = a,
-                Animals = animals.Select(p => new SelectListItem(p.Type,p.Id.ToString())).ToList(),
-                VName = a.Vet.VName
+                AnimalId=id,
+                Type=a.Type,
+                Vets = vets.Select(p => new SelectListItem(p.VName,p.VetId.ToString())).ToList(),
+                Age = a.Age,
+                VetId = a.VetId
             };
 
-            if(model is null)
+           
+            if(ModelVM is null)
             {
                 return NotFound();
             }
-            return View(model);
+            return View(ModelVM);
+        }
+
+        [HttpPost,ActionName("Edit")]
+        public IActionResult EditPost()
+        { 
+            Animal a = uow.AnimalRepository.SearchById(ModelVM.AnimalId);
+
+            a.Type = ModelVM.Type;
+            a.Age = ModelVM.Age;
+            a.VetId = ModelVM.VetId;
+
+            uow.AnimalRepository.Update(a);
+            uow.Save();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            Animal a = uow.AnimalRepository.SearchById(id);
+
+            if(a is null)
+            {
+                return NotFound();
+            }
+
+            uow.AnimalRepository.Delete(a);
+            uow.Save();
+
+            return RedirectToAction("Index");
         }
 
     }

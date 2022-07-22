@@ -1,21 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Domain
 {
-    public class AnimalContext : DbContext
+    public class AnimalContext : IdentityDbContext<Employee,IdentityRole<int>,int>
     {/*
         public AnimalContext([NotNull] DbContextOptions options) : base(options)
         {
 
         }*/
-
-
+       /* public AnimalContext(DbContextOptions options) : base(options)
+        { 
+        }*/
 
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Vet> Vets { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,6 +28,7 @@ namespace Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Animal>().ToTable("Animals");
             
 

@@ -1,31 +1,44 @@
 ﻿@model WebApplication.Models.VetViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 <br />
-<h2 class="text-info">Edit animalssssssssssssss</h2>
+<h2 class="text-info">Edit animal</h2>
 
 <form method="post" action="Edit">
+   <input hidden asp-for="AnimalId" />
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="Animals"></label>
+            <label asp-for=Type></label>
         </div>
         <div class="col-4">
-            <select asp-for="Animal.Id" asp-items="@Model.Animals" class="form-control"> </select>
+            <input asp-for=Type class="form-control" />
         </div>
     </div>
+
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for=VName></label>
-        </div>
+            <label asp-for=Age></label>
+        </div> 
         <div class="col-4">
-            <input asp-for=VName class="form-control" />
+            <input asp-for=Age class="form-control" />
         </div>
     </div>
+
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Vets">Vets</label>
+        </div>
+        <div class="col-4">
+            <select asp-for="@Model.VetId" asp-items="@Model.Vets" class="form-control"> </select>
+        </div>
+    </div>
+
     <br />
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Create" />
+        <input type="submit" class="btn btn-primary" value="Update" />
         <a asp-action="Index" class="btn btn-success">Back</a>
     </div>
 
@@ -38,3 +51,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

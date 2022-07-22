@@ -9,8 +9,12 @@ namespace WebApplication.Models
 {
     public class VetViewModel
     {
-        public Animal Animal { get; set; }
-        public List<SelectListItem> Animals { get; set; }
-        public string VName { get; set; }
+        public string Type { get; set; }
+        public int Age { get; set; }
+        public List<SelectListItem> Vets { get; set; } = new List<SelectListItem>();
+        public int VetId { get; set; }
+        public int AnimalId { get;  set; }
+        public string VetName { get;  set; }
+        //public string VName { get; set; }
     }
 }
