@@ -19,5 +19,7 @@ namespace WebApplication.Models
         [Required]
         [Compare("Password")]
         public string PasswordCheck { get; set; }
+
+        public bool Admin { get; set; }
     }
 }

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using WebApplication.Helpers
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,18 +30,27 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/Home/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/Home/Privacy">Classified</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Model" asp-action="Index">Animals</a>
-                                <a class="dropdown-item" asp-controller="Make" asp-action="Index">Vets</a>
-                            </div>
-                        </li>
+
+                        @if (User.IsInRole(Roles.Admin))
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Home/Privacy">Classified</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Executive))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-controller="Model" asp-action="Index">Animals</a>
+                                    <a class="dropdown-item" asp-controller="Make" asp-action="Index">Vets</a>
+                                </div>
+                            </li>
+                        }
                     </ul>
 
                 </div>

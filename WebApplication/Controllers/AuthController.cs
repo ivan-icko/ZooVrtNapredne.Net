@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
+using WebApplication.Helpers;
+
 
 namespace WebApplication.Controllers
 {
@@ -39,6 +41,25 @@ namespace WebApplication.Controllers
 
             if (res.Succeeded)
             {
+                if(!await roleManager.RoleExistsAsync(Roles.Admin))
+                {
+                    await roleManager.CreateAsync(new IdentityRole<int>(Roles.Admin));
+                }
+
+                if (!await roleManager.RoleExistsAsync(Roles.Executive))
+                {
+                    await roleManager.CreateAsync(new IdentityRole<int>(Roles.Executive));
+                }
+
+                if (register.Admin)
+                {
+                    await manager.AddToRoleAsync(e, Roles.Admin);
+                }
+                else
+                {
+                    await manager.AddToRoleAsync(e, Roles.Executive);
+                }
+                
                 return RedirectToAction("Login");
             }
             else

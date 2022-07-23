@@ -16,5 +16,6 @@ namespace WebApplication.Models
         public int AnimalId { get;  set; }
         public string VetName { get;  set; }
         //public string VName { get; set; }
+        public string ImagePath { get; set; }
     }
 }

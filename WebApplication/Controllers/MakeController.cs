@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.UnitOfWork;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
+
+    [Authorize]
     public class MakeController : Controller
     {
         private readonly IUnitOfWork uow;

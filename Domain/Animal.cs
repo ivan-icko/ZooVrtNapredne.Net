@@ -14,5 +14,15 @@ namespace Domain
 
         public int VetId { get; set; }
         public Vet Vet { get; set; }
+
+        public string ImagePath { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Animal animal &&
+                   Type == animal.Type &&
+                   Age == animal.Age &&
+                   VetId == animal.VetId;
+        }
     }
 }

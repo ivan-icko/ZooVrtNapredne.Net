@@ -38,7 +38,7 @@ namespace DataAccessLayer.Implementations
 
         public List<Animal> SearchBy(Expression<Func<Animal, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return context.Animals.Where(predicate).ToList();
         }
 
         public Animal SearchById(Animal entity)
