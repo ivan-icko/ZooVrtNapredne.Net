@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,9 +33,10 @@ namespace WebApplication
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddDbContext<AnimalContext>();
+            services.AddDbContext<AnimalContext>(opt => {
+                opt.UseSqlServer(Configuration.GetConnectionString("Database")); 
+            });
 
-            /* services.AddDefaultIdentity<Employee>().AddRoles<IdentityRole>().AddEntityFrameworkStores<AnimalContext>();*/
 
             services.AddIdentity<Employee, IdentityRole<int>>(opt=> {
                 opt.User.AllowedUserNameCharacters = null;
@@ -43,7 +45,7 @@ namespace WebApplication
 
             services.ConfigureApplicationCookie(opt => {
                 opt.LoginPath = "/Auth/Login";
-                opt.AccessDeniedPath = "/Auth/Login";
+                opt.AccessDeniedPath = "/Auth/Forbidden";
                 opt.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 opt.SlidingExpiration = true;
             });

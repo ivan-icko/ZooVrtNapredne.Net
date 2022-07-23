@@ -25,7 +25,8 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        [Authorize]
+        //[Authorize]
+        [Authorize(Roles ="Admin")]
         public IActionResult Privacy()
         {
             return View();

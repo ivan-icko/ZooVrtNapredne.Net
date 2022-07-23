@@ -8,14 +8,11 @@ using System.Diagnostics.CodeAnalysis;
 namespace Domain
 {
     public class AnimalContext : IdentityDbContext<Employee,IdentityRole<int>,int>
-    {/*
-        public AnimalContext([NotNull] DbContextOptions options) : base(options)
-        {
-
-        }*/
-       /* public AnimalContext(DbContextOptions options) : base(options)
+    {
+       public AnimalContext([NotNull]DbContextOptions options) : base(options)
         { 
-        }*/
+
+        }
 
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Vet> Vets { get; set; }
@@ -23,7 +20,7 @@ namespace Domain
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ZooNapredneNet;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+          /*optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ZooNapredneNet;Integrated Security=True;");*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

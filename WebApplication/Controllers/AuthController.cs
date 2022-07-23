@@ -13,11 +13,13 @@ namespace WebApplication.Controllers
     {
         private readonly UserManager<Employee> manager;
         private readonly SignInManager<Employee> signIn;
+        private readonly RoleManager<IdentityRole<int>> roleManager;
 
-        public AuthController(UserManager<Employee> manager,SignInManager<Employee> signIn)
+        public AuthController(UserManager<Employee> manager,SignInManager<Employee> signIn,RoleManager<IdentityRole<int>> roleManager)
         {
             this.manager = manager;
             this.signIn = signIn;
+            this.roleManager = roleManager;
         }
 
 
@@ -32,18 +34,18 @@ namespace WebApplication.Controllers
 
             };
 
-            var result = await manager.CreateAsync(e,register.Password);
+            var res = await manager.CreateAsync(e,register.Password);
+           // roleManager.CreateAsync(new IdentityRole<int>() { Name = "Neko" });
 
-
-            if (result.Succeeded)
+            if (res.Succeeded)
             {
                 return RedirectToAction("Login");
             }
             else
             {
-                if (result.Errors.Any(e => e.Code == "DuplicateUserName"))
-                    ModelState.AddModelError("Username", result.Errors.FirstOrDefault(e => e.Code == "DuplicateUserName")?.Description);
-                if (result.Errors.Any(e => e.Code.Contains("Password")))
+                if (res.Errors.Any(e => e.Code == "DuplicateUserName"))
+                    ModelState.AddModelError("Username", res.Errors.FirstOrDefault(e => e.Code == "DuplicateUserName")?.Description);
+                if (res.Errors.Any(e => e.Code.Contains("Password")))
                     ModelState.AddModelError("Password", "Error in credentials");
                 return View();
             }
