@@ -37,14 +37,23 @@ namespace WebApplication.Controllers
 
 
 
-        public IActionResult Index(string sortOrder,int pageNumber = 1, int pageSize = 3)
+        public IActionResult Index(string searchString,string sortOrder,int pageNumber = 1, int pageSize = 3)
         {
+
             ViewBag.CurrentSortOrder = sortOrder;
+            ViewBag.CurrentFilter = searchString;
             ViewBag.AgeSortParam = String.IsNullOrEmpty(sortOrder)?"age_desc":"" ;
 
             int ExcludeRecords = (pageNumber * pageSize) - pageSize;
 
             var model = from a in uow.AnimalRepository.GetAll() select a;
+            var animalCount = model.Count();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(a => a.Type.ToUpper().Contains(searchString.ToUpper()));
+                animalCount = model.Count();
+            }
 
             switch (sortOrder)
             {
@@ -74,7 +83,7 @@ namespace WebApplication.Controllers
             var result = new PagedResult<VetViewModel>
             {
                 Data = list,
-                TotalItems = uow.AnimalRepository.GetAll().Count(),
+                TotalItems = animalCount,
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };
@@ -160,11 +169,12 @@ namespace WebApplication.Controllers
             }
             return View(ModelVM);
         }
-        [HttpPost,ActionName("Edit")]
-        public IActionResult EditPost()
-        { 
-            Animal a = uow.AnimalRepository.SearchById(ModelVM.AnimalId);
 
+        [HttpPost, ActionName("Edit")]
+        public IActionResult EditPost(VetViewModel v)
+        {
+            Animal a = uow.AnimalRepository.SearchById(ModelVM.AnimalId);
+            /*
             a.Type = ModelVM.Type;
             a.Age = ModelVM.Age;
             a.VetId = ModelVM.VetId;
@@ -172,7 +182,55 @@ namespace WebApplication.Controllers
 
             uow.AnimalRepository.Update(a);
             uow.Save();
+            return RedirectToAction("Index");*/
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            a.Age = v.Age;
+            a.Type = v.Type;
+            a.VetId = v.VetId;
+
+            //uow.AnimalRepository.Add(a);
+
+            UploadImageIfAvalible(a,v.AnimalId);
+
+            uow.Save();
+           
             return RedirectToAction("Index");
+        }
+
+
+        private void UploadImageIfAvalible(Animal a,int id)
+        {
+            var savedAnimal = uow.AnimalRepository.SearchById(id);
+            var animalId = id;
+
+            string wwwroothPath = hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+
+
+            if (files.Count != 0)
+            {
+                var ImagePath = @"images\animals\";
+                var Extension = Path.GetExtension(files[0].FileName);
+                var RelativeImagePath = ImagePath + animalId + Extension;
+                var AbsImagePath = Path.Combine(wwwroothPath, RelativeImagePath);
+
+
+                using (var fileStream = new FileStream(AbsImagePath, FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                //sacuvaj imgPath u bazi
+
+                savedAnimal.ImagePath = RelativeImagePath;
+                uow.AnimalRepository.Update(savedAnimal);
+                uow.Save();
+            }
         }
       
 
