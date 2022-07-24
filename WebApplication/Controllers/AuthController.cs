@@ -82,7 +82,6 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-
             return View();
         }
         [HttpPost]
@@ -97,6 +96,14 @@ namespace WebApplication.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await signIn.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+       
 
 
     }

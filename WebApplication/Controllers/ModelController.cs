@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using WebApplication.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using cloudscribe.Pagination.Models;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace WebApplication.Controllers
 {
@@ -31,23 +35,54 @@ namespace WebApplication.Controllers
         }
 
 
-        
 
-        public IActionResult Index()
+
+        public IActionResult Index(string sortOrder,int pageNumber = 1, int pageSize = 3)
         {
-            var model = uow.AnimalRepository.GetAll();
+            ViewBag.CurrentSortOrder = sortOrder;
+            ViewBag.AgeSortParam = String.IsNullOrEmpty(sortOrder)?"age_desc":"" ;
+
+            int ExcludeRecords = (pageNumber * pageSize) - pageSize;
+
+            var model = from a in uow.AnimalRepository.GetAll() select a;
+
+            switch (sortOrder)
+            {
+                case "age_desc":
+                    model = model.OrderByDescending(b => b.Age);
+                    break;
+                default:
+                    model = model.OrderBy(b => b.Age);
+                    break;
+            }
+
+            model = model.Skip(ExcludeRecords).Take(pageSize);
+
             List<VetViewModel> list = new List<VetViewModel>();
             list = model.Select(m => new VetViewModel()
             {
-                Type=m.Type,
-                Age=m.Age,
-                AnimalId=m.Id,
-                VetId=m.VetId,
-                VetName=m.Vet.VName,
-                ImagePath=m.ImagePath}).ToList();
+                Type = m.Type,
+                Age = m.Age,
+                AnimalId = m.Id,
+                VetId = m.VetId,
+                VetName = m.Vet.VName,
+                ImagePath = m.ImagePath 
+            }).ToList();
 
-            return View(list);
+           
+
+            var result = new PagedResult<VetViewModel>
+            {
+                Data = list,
+                TotalItems = uow.AnimalRepository.GetAll().Count(),
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+
+            return View(result);
         }
+       
 
 
         public IActionResult Create()
@@ -58,7 +93,6 @@ namespace WebApplication.Controllers
             vm.Vets = vets.Select(p => new SelectListItem(p.VName, p.VetId.ToString())).ToList();
             return View(vm);
         }
-
         [HttpPost,ActionName("Create")]
         public IActionResult CreatePost(VetViewModel v) 
         {
@@ -126,7 +160,6 @@ namespace WebApplication.Controllers
             }
             return View(ModelVM);
         }
-
         [HttpPost,ActionName("Edit")]
         public IActionResult EditPost()
         { 
@@ -141,6 +174,8 @@ namespace WebApplication.Controllers
             uow.Save();
             return RedirectToAction("Index");
         }
+      
+
         [HttpPost]
         public IActionResult Delete(int id)
         {
