@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 namespace WebApplication.Controllers
 {
 
-    [Authorize]
+    
     public class ModelController : Controller
     {
         public readonly IUnitOfWork uow;
@@ -174,16 +174,7 @@ namespace WebApplication.Controllers
         public IActionResult EditPost(VetViewModel v)
         {
             Animal a = uow.AnimalRepository.SearchById(ModelVM.AnimalId);
-            /*
-            a.Type = ModelVM.Type;
-            a.Age = ModelVM.Age;
-            a.VetId = ModelVM.VetId;
-
-
-            uow.AnimalRepository.Update(a);
-            uow.Save();
-            return RedirectToAction("Index");*/
-
+            
             if (!ModelState.IsValid)
             {
                 return View();
@@ -192,8 +183,6 @@ namespace WebApplication.Controllers
             a.Age = v.Age;
             a.Type = v.Type;
             a.VetId = v.VetId;
-
-            //uow.AnimalRepository.Add(a);
 
             UploadImageIfAvalible(a,v.AnimalId);
 
@@ -211,15 +200,12 @@ namespace WebApplication.Controllers
             string wwwroothPath = hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
-
-
             if (files.Count != 0)
             {
                 var ImagePath = @"images\animals\";
                 var Extension = Path.GetExtension(files[0].FileName);
                 var RelativeImagePath = ImagePath + animalId + Extension;
                 var AbsImagePath = Path.Combine(wwwroothPath, RelativeImagePath);
-
 
                 using (var fileStream = new FileStream(AbsImagePath, FileMode.Create))
                 {
@@ -229,7 +215,6 @@ namespace WebApplication.Controllers
 
                 savedAnimal.ImagePath = RelativeImagePath;
                 uow.AnimalRepository.Update(savedAnimal);
-                uow.Save();
             }
         }
       

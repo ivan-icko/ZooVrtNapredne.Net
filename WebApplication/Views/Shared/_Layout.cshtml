@@ -33,17 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/Home/Index">Home</a>
                         </li>
-
-                        @if (User.IsInRole(Roles.Admin))
-                        {
-
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/Home/Privacy">Classified</a>
                             </li>
-                        }
-
-                        @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Executive))
-                        {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Dropdown
@@ -53,11 +45,13 @@
                                     <a class="dropdown-item" asp-controller="Make" asp-action="Index">Vets</a>
                                 </div>
                             </li>
-                        }
+                        
                     </ul>
 
                 </div>
                 <partial name="_LoginPartial" />
+
+
             </div>
         </nav>
         <br />

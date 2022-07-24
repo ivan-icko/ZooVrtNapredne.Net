@@ -1,4 +1,5 @@
 ﻿@model cloudscribe.Pagination.Models.PagedResult<VetViewModel>
+@using WebApplication.Helpers
 
 @{
     ViewData["Title"] = "Index";
@@ -15,7 +16,7 @@
     <div>
         <p>
             Find animal: <input type="text" name="searchString" value="@ViewBag.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-info" />  
+            <input type="submit" value="Search" class="btn btn-info" />
             <a asp-action="Index">Remove filter</a>
         </p>
     </div>
@@ -24,9 +25,14 @@
     <div class="col-6">
         <h2 class="text-info">Zoo</h2>
     </div>
-    <div class="col-6 text-right">
-        <a class=" btn btn-info" asp-action="Create">Add new animal</i></a>
-    </div>
+
+    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Executive))
+    {
+        <div class="col-6 text-right">
+            <a class="btn btn-info" asp-action="Create"> Add new animal</a>
+        </div>
+
+    }
     <br />
     <div class="col-12">
         <table class="table table-striped border">
@@ -47,7 +53,7 @@
                     <td>
                         @if (String.IsNullOrEmpty(item.ImagePath))
                         {
-                            <img src="@Url.Content("/"+"images\\animals\\no.png")"width="200" height="100" />
+                            <img src="@Url.Content("/"+"images\\animals\\no.png")" width="200" height="100" />
                         }
                         else
                         {

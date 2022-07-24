@@ -35,7 +35,7 @@ namespace WebApplication
 
             services.AddDbContext<AnimalContext>(opt => {
                 opt.UseSqlServer(Configuration.GetConnectionString("Database")); 
-            });
+            }); 
 
 
             services.AddIdentity<Employee, IdentityRole<int>>(opt=> {
@@ -45,7 +45,7 @@ namespace WebApplication
 
             services.ConfigureApplicationCookie(opt => {
                 opt.LoginPath = "/Auth/Login";
-                opt.AccessDeniedPath = "/Auth/Forbidden";
+                opt.AccessDeniedPath = "/Home/Index";
                 opt.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 opt.SlidingExpiration = true;
             });
@@ -80,7 +80,7 @@ namespace WebApplication
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Auth}/{action=Login}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                
             });
         }
