@@ -1,5 +1,5 @@
 ﻿@using WebApplication.Helpers
-
+@using WebApplication.Helpers
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,19 +33,23 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/Home/Index">Home</a>
                         </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/Home/Privacy">Classified</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-controller="Model" asp-action="Index">Animals</a>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/Home/Privacy">Classified</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="Model" asp-action="Index">Animals</a>
+                                @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Executive))
+                                {
                                     <a class="dropdown-item" asp-controller="Make" asp-action="Index">Vets</a>
-                                </div>
-                            </li>
-                        
+
+                                }
+                            </div>
+                        </li>
+
                     </ul>
 
                 </div>
