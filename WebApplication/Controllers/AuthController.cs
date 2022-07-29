@@ -91,7 +91,7 @@ namespace WebApplication.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Model");
             }
 
             return View();
