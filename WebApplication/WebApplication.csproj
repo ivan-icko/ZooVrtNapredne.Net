@@ -23,4 +23,8 @@
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\pocetna\" />
+  </ItemGroup>
+
 </Project>

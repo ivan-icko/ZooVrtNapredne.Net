@@ -2,7 +2,190 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body>
+
+    <main role="main">
+
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" ></li>
+                <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img class="first-slide" src="~/images/pocetna/slon.jpg" alt="First slide" width="1200" height="600">
+                    <div class="container">
+                        <div class="carousel-caption text-left">
+                            <h1>Nezaboravno iskutvo!</h1>
+                            <p>Doživite nezaboravno iskustvo i jedan od najlepših doživljaja u vašem životu</p>
+                            <p><a class="btn btn-lg btn-primary" href="/Auth/Login" role="button">Sign up today</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item active">
+                    <img class="second-slide" src="~/images/pocetna/logo-zoo1.jpg " alt="Second slide" width="1100"  height="600">
+                    <div class="container">
+                        <div class="carousel-caption text-left">
+                            <h1 style="color:blue">DOBRO DOŠLI!</h1>
+                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Dugme</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="third-slide" src="~/images/pocetna/zirafa.jpg" alt="Third slide" width="1200"  height="600">
+                    <div class="container">
+                        <div class="carousel-caption text-right">
+                            <h1>Paket po vašoj meri!</h1>
+                            <p>Izaberite paket po vašoj meri i uživajte u lepoti životinja</p>
+                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <br />
+        <br />
+
+
+        <!-- Marketing messaging and featurettes
+        ================================================== -->
+        <!-- Wrap the rest of the page in another container to center all the content. -->
+
+        <div class="container marketing">
+
+            <!-- Three columns of text below the carousel -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <img class="rounded-circle" src="~/images/pocetna/logo-zoo.jpg" alt="Generic placeholder image" width="140" height="140">
+                    <h2>ZOO</h2>
+                    <p>Zoo vrt prema vašim željama. Istražite Zoo vrt u celosti ili izaberite paket i obiđite one životinje koje najviše volite i želite da vidite.</p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <img class="rounded-circle" src="~/images/pocetna/beli_tigar.jpg" alt="Generic placeholder image" width="140" height="140">
+                    <h2>Paket</h2>
+                    <p>Prijavite se na sajt i izaberite paket po vašoj želji. Odabirom paketa pravite sami svoje putovanje kroz ZOO vrt</p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <img class="rounded-circle" src="~/images/pocetna/lisica.jpg" alt="Generic placeholder image" width="140" height="140">
+                    <h2>Naučite nešto novo</h2>
+                    <p>U donjem delu stranice će otkriti samo deo životinja koje ćete uživo videti i upoznati se sa njihovim osobenostima i ponašanjem. UŽIVAJTE!</p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+            <!-- START THE FEATURETTES -->
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">Obavezno pogledajte u nebo! <span class="text-muted">Suri orao</span></h2>
+                    <p class="lead">Suri ili zlatni orao (lat. Aquila chrysaetos), jedna je od najvećih ptica grabljivica. Veličina odraslih surih orlova može biti različita. Jedinke nekih od najvećih podvrsta surih orlova mogu biti vrlo velike. Većina vrsta su duge između 66 i 100 cm sa rasponom krila između 150 i 240 cm. Masa je između 2,5 i 6,7 kilograma. Međutim, primijećeni su neki primjerci u divljini koji su nešto veći, do čak 9 kilograma i dužine od 102 cm. Kao i kod mnogih drugih dnevnih grabljivica, i kod surih orlova ženke su krupnije od mužjaka.</p>
+                </div>
+                <div class="col-md-5">
+                    <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;" src="~/images/pocetna/suri_orao1.png" data-holder-rendered="true">
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7 order-md-2">
+                    <h2 class="featurette-heading">Lepe divljne mace! <span class="text-muted">Šumski ris</span></h2>
+                    <p class="lead">Obični ris (evroazijski ili šumski ris) (lat. Lynx lynx) je vrsta mačke srednje veličine, prirodno nastanjene u Sibiru, centralnoj i istočnoj Evropi, kao i u istočnoj i jugoistočnoj Aziji. Može da naraste do 1,3 metara. Stanovnik je gustih šuma i rečnih klisura. Zauzima teritoriju od 5 do 100 kvadratnih kilometara i na njoj ne trpi druge pripadnike svoje vrste. Obični ris, najveća je vrsta risa, kojih ukupno ima četiri. Dužina mu je između 80 i130 centimetara, a visina između 60 i 65 cm. Dužina repa mu je od 11 do 24,5 cm. Mužjaci su obično teški od 18 do 30 kilograma, a ženke 8 do 21 kg. Ova vrsta risa ima širok spektar zvukova, ali je generalno tiha mačka, osim u periodu parenja. Zvukovi parenja su mnogo glasniji i sastoje se od dubokog režanja kod mužjaka, dok ženke ispuštaju zvukove poput mjaukanja, samo mnogo glasnije od domaće mačke. </p>
+                </div>
+                <div class="col-md-5 order-md-1">
+                    <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" src="~/images/pocetna/sumski_ris1.jpg" data-holder-rendered="true" style="width: 500px; height: 500px;">
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">Plisani medvedi! <span class="text-muted">Mrki medved</span></h2>
+                    <p class="lead">Mrki medved (lat. Ursus arctos) vrsta je zveri iz porodice medveda, široko rasprostranjena u severnoj Evroaziji i Severnoj Americi. U Severnoj Americi populacije smeđih medveda često se nazivaju grizli. Jedan je od najvećih živih zemaljskih pripadnika reda Carnivora, čiji je rival po veličini samo njegov najbliži srodnik, polarni medved (Ursus maritimus), koji je mnogo manje varijabilan po veličini i nešto veći u proseku. Medved je najnezgrapnija i najteža zver Evrope. Pokreti mu deluju nespretnije nego što stvarno jesu. Njegova silna snaga i jake kandže olakšavaju mu pešačenje. Penje se po stenama a može da se popne i na drvo. Ne plaši se vode i često ulazi u nju da se rashladi. Više je upućen na biljnu nego na životinjsku hranu mada jednostavno jede (ždere) sve što je jestivo. Obožava med, a sa vremena na vreme uhvati i neku ribu. Ako je navikao na životinjsku hranu postaje grabljivac u pravom smislu te reči. Tada progoni sve veće životinje (ovce, konje i različitu divljač). Zimu provodi u snu u svom brižljivo spremljenom brlogu, gde ženka tokom zime donosi na svet 1-3 mečeta.</p>
+                </div>
+                <div class="col-md-5">
+                    <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" src="~/images/pocetna/mrki_medved.jpg" data-holder-rendered="true" style="width: 500px; height: 500px;">
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <section class="contact-section bg-black">
+                <div class="container px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card py-4 h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                                    <h4 class="text-uppercase m-0">Adresa</h4>
+                                    <hr class="my-4 mx-auto" />
+                                    <div class="small text-black-50">Mali Kalemegdan 8, Beograd 11000, Srbija</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card py-4 h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-envelope text-primary mb-2"></i>
+                                    <h4 class="text-uppercase m-0">Email</h4>
+                                    <hr class="my-4 mx-auto" />
+                                    <div class="small text-black-50"><a href="#!">office@beozoovrt.rs</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card py-4 h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                                    <h4 class="text-uppercase m-0">Telefon</h4>
+                                    <hr class="my-4 mx-auto" />
+                                    <div class="small text-black-50">+381 (0)11 262 45 26</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social d-flex justify-content-center">
+                        <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                        <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- /END THE FEATURETTES -->
+
+        </div><!-- /.container -->
+        <!-- FOOTER -->
+        <footer class="container">
+            <p class="float-right"><a href="#">Vrati se na pocetak</a></p>
+            <br />
+        </footer>
+    </main>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+   
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="25" style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">500x500</text></svg>
+</body>
