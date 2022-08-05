@@ -11,6 +11,9 @@ namespace DataAccessLayer.UnitOfWork
     {
         public IAnimalRepository AnimalRepository { get; set; }
         public IVetRepository VetRepository { get; set; }
+        public IpackageRepository PackageRepository { get; set; }
+
+
 
         public void Save();
     }

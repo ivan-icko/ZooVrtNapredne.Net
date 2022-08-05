@@ -112,7 +112,7 @@ namespace WebApplication.Controllers
 
             Animal a = new Animal() { Type = v.Type, Age = v.Age, VetId = v.VetId };
 
-            uow.AnimalRepository.Add(a) ;
+            uow.AnimalRepository.Add(a);
             uow.Save();
 
             var savedAnimal = uow.AnimalRepository.SearchBy(animal => animal == a).FirstOrDefault();

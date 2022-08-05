@@ -16,6 +16,7 @@ namespace Domain
         public Vet Vet { get; set; }
 
         public string ImagePath { get; set; }
+        public List<Package> Packages { get; set; }
 
         public override bool Equals(object obj)
         {
