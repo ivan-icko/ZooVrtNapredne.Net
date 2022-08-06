@@ -12,6 +12,7 @@ namespace WebApplication.Models
         public double Duration { get; set; }
         public string ImagePath { get; set; }
         public double Price { get; set; }
+        public List<string> AnimalNames { get; set; }
 
     }
 }

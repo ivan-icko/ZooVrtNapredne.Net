@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Interfaces;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace DataAccessLayer.Implementations
 
         public List<Package> GetAll()
         {
-            return context.Packages.ToList();
+            return context.Packages.Include(p => p.Animals).ToList();
         }
 
         public List<Package> SearchBy(Expression<Func<Package, bool>> predicate)

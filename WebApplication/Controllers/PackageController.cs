@@ -30,12 +30,12 @@ namespace WebApplication.Controllers
             int ExcludeRecords = (pageNumber * pageSize) - pageSize;
 
             var model = from a in uow.PackageRepository.GetAll() select a;
-            var animalCount = model.Count();
+            var packageCount = model.Count();
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(a => a.Name.ToUpper().Contains(searchString.ToUpper()));
-                animalCount = model.Count();
+                packageCount = model.Count();
             }
 
             switch (sortOrder)
@@ -51,19 +51,25 @@ namespace WebApplication.Controllers
             model = model.Skip(ExcludeRecords).Take(pageSize);
 
             List<PackageViewModel> list = new List<PackageViewModel>();
+
             list = model.Select(m => new PackageViewModel()
             {
-                Name=m.Name,
-                Duration=m.DurationInHours,
-                PackageId=m.PackageId
+                Name = m.Name,
+                Duration = m.DurationInHours,
+                PackageId = m.PackageId,
+                Price = m.Price,
+                AnimalNames = m.Animals.Select(a => a.Type).ToList()
+
             }).ToList();
 
+            
+           
 
 
             var result = new PagedResult<PackageViewModel>
             {
                 Data = list,
-                TotalItems = animalCount,
+                TotalItems = packageCount,
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };

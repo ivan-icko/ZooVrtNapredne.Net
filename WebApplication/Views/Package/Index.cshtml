@@ -37,14 +37,15 @@
     <div class="col-12">
         <table class="table table-striped border">
             <tr class="table-info">
-                <th>Picture</th>
-                <th>Type</th>
+                <th>Package</th>
+                <th>Name</th>
+                <th>Animals</th>
                 <th>
                     <a asp-action="Index"
                        asp-route-sortOrder="@ViewBag.AgeSortParam"
-                       asp-route-pageNumber="@Model.PageNumber">Age</a>
+                       asp-route-pageNumber="@Model.PageNumber">Duration</a>
                 </th>
-                <th>Vet</th>
+                <th>Price</th>
                 <th></th>
             </tr>
             @foreach (var item in Model.Data)
@@ -53,7 +54,7 @@
                     <td>
                         @if (String.IsNullOrEmpty(item.ImagePath))
                         {
-                            <img src="@Url.Content("/"+"images\\packages\\no.png")" width="200" height="100" />
+                            <img src="@Url.Content("/"+"images\\packages\\no.png")" width="400" height="200" />
                         }
                         else
                         {
@@ -63,6 +64,13 @@
                     </td>
                     <td>@item.Name</td>
 
+                    <td>
+                        @foreach (var name in item.AnimalNames)
+                        {
+                            <b>@name</b>
+                            <br />
+                        }
+                    </td>
                     <td>
                         @item.Duration
                     </td>
