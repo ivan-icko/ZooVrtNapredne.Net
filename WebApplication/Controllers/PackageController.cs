@@ -1,5 +1,6 @@
 ﻿using cloudscribe.Pagination.Models;
 using DataAccessLayer.UnitOfWork;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace WebApplication.Controllers
     public class PackageController : Controller
     {
         private readonly IUnitOfWork uow;
+
+        [BindProperty]
+        public PackageViewModel ModelVM { get; set; }
 
         public PackageController(IUnitOfWork iow)
         {
@@ -77,5 +81,35 @@ namespace WebApplication.Controllers
 
             return View(result);
         }
+
+
+
+
+
+
+
+
+        public IActionResult Edit(int id)
+        {
+            Package p = uow.PackageRepository.SearchById(new Package() { PackageId= id });
+            var animals = uow.AnimalRepository.GetAll();
+            var restAnimals = animals.Except(p.Animals);
+
+            ModelVM = new PackageViewModel()
+            {
+                PackageId = id,
+                Duration = p.DurationInHours,
+                Name = p.Name,
+                Price = p.Price
+            };
+
+
+            if (ModelVM is null)
+            {
+                return NotFound();
+            }
+            return View(ModelVM);
+        }
+
     }
 }

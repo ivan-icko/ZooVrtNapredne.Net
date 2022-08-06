@@ -41,7 +41,7 @@ namespace DataAccessLayer.Implementations
 
         public Package SearchById(Package entity)
         {
-            throw new NotImplementedException();
+            return context.Packages.Include(p => p.Animals).First();
         }
 
         public Package SearchById(int id)

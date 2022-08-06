@@ -21,6 +21,7 @@ namespace Domain
         public override bool Equals(object obj)
         {
             return obj is Animal animal &&
+                    //Id == animal.Id &&
                    Type == animal.Type &&
                    Age == animal.Age &&
                    VetId == animal.VetId;
