@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    ViewData["Controller"] = "Model";
+    ViewData["Controller"] = "Package";
     ViewData["Action"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -41,11 +41,13 @@
                 <th>Name</th>
                 <th>Animals</th>
                 <th>
+                    Duration
+                </th>
+                <th>
                     <a asp-action="Index"
                        asp-route-sortOrder="@ViewBag.AgeSortParam"
-                       asp-route-pageNumber="@Model.PageNumber">Duration</a>
+                       asp-route-pageNumber="@Model.PageNumber">Price</a>
                 </th>
-                <th>Price</th>
                 <th></th>
             </tr>
             @foreach (var item in Model.Data)
