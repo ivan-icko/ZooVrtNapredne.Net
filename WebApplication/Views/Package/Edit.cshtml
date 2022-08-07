@@ -7,7 +7,7 @@
 <h2 class="text-info">Edit package</h2>
 <br />
 
-<form method="post" enctype="multipart/form-data" asp-action="Edit">
+<form method="post" id="form" enctype="multipart/form-data" asp-action="Edit">
     <input hidden asp-for="PackageId" />
     <input hidden asp-for="ImagePath" />
 
@@ -50,18 +50,33 @@
 
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="AnimalNames">Animals</label>
+            <label>Animals</label>
         </div>
-        <div class="col-4">
-            <textarea id="w3review" name="w3review" readonly rows="4" cols="50">
-At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
-</textarea>
-        </div>
-        <div class="col-1"></div>
-        <div class="col-4">
-            <textarea id="w3review" name="w3review" readonly rows="4" cols="50">
-At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
-</textarea>
+        <div class="col-9">
+
+            <table class="table table-stripped">
+                <tr>
+                    <th>Animals in package</th>
+                    <th>Transfer</th>
+                    <th>All animals</th>
+                </tr>
+                <tr>
+                    <td class="col-md-5">
+                        <select id="listbox1" multiple="multiple" class="table" asp-for="@Model.NewAnimalsInPackage" asp-items="@Model.Animals">
+                        </select>
+                    </td>
+                    <td class="col-md-2">
+                        <input type="button" id="but1" value=">>" />
+                        <input type="button" id="but2" value="<<" />
+                    </td>
+
+                    <td class="col-md-5">
+                        <select id="listbox2" multiple="multiple" class="table" asp-items="@Model.OtherAnimals">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
         </div>
 
 
@@ -81,5 +96,32 @@ At w3schools.com you will learn how to make a website. They offer free tutorials
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(function () {
+            $("#but1").click(function () {
+                $("#listbox1 option:selected").each(function () {
+                    $(this).remove().appendTo("#listbox2");
+                });
+            });
+            $("#but2").click(function () {
+                $("#listbox2 option:selected").each(function () {
+                    $(this).remove().appendTo("#listbox1");
+                });
+            });
+        });
+
+
+        //funkcija za selektovanje svih zivotinja koje ostaju u paketu, nakon submita
+        var form = document.getElementById('form');
+        form.addEventListener('submit', function (event) {
+            options = document.getElementById('listbox1');
+            for (i = 0; i < options.length; i++) {
+                options[i].selected = "true";
+            }
+        });
+
+
+    </script>
 }
 
