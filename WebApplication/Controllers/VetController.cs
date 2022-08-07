@@ -24,8 +24,8 @@ namespace WebApplication.Controllers
         public IActionResult Index()
         {
             var model = uow.VetRepository.GetAll();
-            List<AnimalVewModel> list = new List<AnimalVewModel>();
-            list = model.Select(m => new AnimalVewModel() { VName = m.VName,Id = m.VetId }).ToList();
+            List<VetViewModel> list = new List<VetViewModel>();
+            list = model.Select(m => new VetViewModel() { VName = m.VName,Id = m.VetId }).ToList();
             return View(list);
         }
 
@@ -36,7 +36,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(AnimalVewModel vet)
+        public IActionResult Create(VetViewModel vet)
         {
             if (!ModelState.IsValid)
             {
@@ -74,13 +74,13 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-            AnimalVewModel model = new AnimalVewModel() { VName = vet.VName, Id = vet.VetId};
+            VetViewModel model = new VetViewModel() { VName = vet.VName, Id = vet.VetId};
             return View(model);
         }
 
 
         [HttpPost]
-        public IActionResult Edit(AnimalVewModel vet)
+        public IActionResult Edit(VetViewModel vet)
         {
             if (!ModelState.IsValid)
             {

@@ -25,7 +25,7 @@ namespace WebApplication.Controllers
         private readonly IWebHostEnvironment hostingEnvironment;
 
         [BindProperty]
-        public VetViewModel ModelVM { get; set; }
+        public AnimalViewModel ModelVM { get; set; }
 
 
         public ModelController(IUnitOfWork uow, IWebHostEnvironment h)
@@ -67,8 +67,8 @@ namespace WebApplication.Controllers
 
             model = model.Skip(ExcludeRecords).Take(pageSize);
 
-            List<VetViewModel> list = new List<VetViewModel>();
-            list = model.Select(m => new VetViewModel()
+            List<AnimalViewModel> list = new List<AnimalViewModel>();
+            list = model.Select(m => new AnimalViewModel()
             {
                 Type = m.Type,
                 Age = m.Age,
@@ -80,7 +80,7 @@ namespace WebApplication.Controllers
 
            
 
-            var result = new PagedResult<VetViewModel>
+            var result = new PagedResult<AnimalViewModel>
             {
                 Data = list,
                 TotalItems = animalCount,
@@ -97,13 +97,13 @@ namespace WebApplication.Controllers
         public IActionResult Create()
         {
             var vets = uow.VetRepository.GetAll();
-            VetViewModel vm = new VetViewModel();
+            AnimalViewModel vm = new AnimalViewModel();
 
             vm.Vets = vets.Select(p => new SelectListItem(p.VName, p.VetId.ToString())).ToList();
             return View(vm);
         }
         [HttpPost,ActionName("Create")]
-        public IActionResult CreatePost(VetViewModel v) 
+        public IActionResult CreatePost(AnimalViewModel v) 
         {
             if (!ModelState.IsValid)
             {
@@ -153,7 +153,7 @@ namespace WebApplication.Controllers
             Animal a = uow.AnimalRepository.SearchById(new Animal() { Id = id });
             var vets = uow.VetRepository.GetAll();
 
-            ModelVM= new VetViewModel()
+            ModelVM= new AnimalViewModel()
             {
                 AnimalId=id,
                 Type=a.Type,
@@ -171,7 +171,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost, ActionName("Edit")]
-        public IActionResult EditPost(VetViewModel v)
+        public IActionResult EditPost(AnimalViewModel v)
         {
             Animal a = uow.AnimalRepository.SearchById(ModelVM.AnimalId);
             
