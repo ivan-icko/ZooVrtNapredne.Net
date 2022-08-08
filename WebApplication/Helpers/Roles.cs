@@ -8,6 +8,6 @@ namespace WebApplication.Helpers
     public class Roles
     {
         public const string Admin = "Admin";
-        public const string Executive = "Executive";
+        public const string Visitor = "Visitor";
     }
 }

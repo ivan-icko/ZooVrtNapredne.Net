@@ -35,8 +35,9 @@ namespace WebApplication
 
             services.AddDbContext<AnimalContext>(opt => {
                 opt.UseSqlServer(Configuration.GetConnectionString("Database")); 
-            }); 
+            });
 
+            services.AddHttpContextAccessor();
 
             services.AddIdentity<Employee, IdentityRole<int>>(opt=> {
                 opt.User.AllowedUserNameCharacters = null;

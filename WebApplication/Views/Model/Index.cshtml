@@ -26,7 +26,7 @@
         <h2 class="text-info">Zoo</h2>
     </div>
 
-    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Executive))
+    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Visitor))
     {
         <div class="col-6 text-right">
             <a class="btn btn-info" asp-action="Create"> Add new animal</a>
@@ -69,7 +69,7 @@
 
             <td>@item.VetName</td>
 
-            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Executive))
+            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Visitor))
             {
                 <td class="text-right">
                     <div class="btn-group">

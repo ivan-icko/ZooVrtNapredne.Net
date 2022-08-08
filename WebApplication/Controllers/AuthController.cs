@@ -37,6 +37,7 @@ namespace WebApplication.Controllers
             };
 
             var res = await manager.CreateAsync(e,register.Password);
+            
            // roleManager.CreateAsync(new IdentityRole<int>() { Name = "Neko" });
 
             if (res.Succeeded)
@@ -46,9 +47,9 @@ namespace WebApplication.Controllers
                     await roleManager.CreateAsync(new IdentityRole<int>(Roles.Admin));
                 }
 
-                if (!await roleManager.RoleExistsAsync(Roles.Executive))
+                if (!await roleManager.RoleExistsAsync(Roles.Visitor))
                 {
-                    await roleManager.CreateAsync(new IdentityRole<int>(Roles.Executive));
+                    await roleManager.CreateAsync(new IdentityRole<int>(Roles.Visitor));
                 }
 
                 if (register.Admin)
@@ -57,7 +58,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    await manager.AddToRoleAsync(e, Roles.Executive);
+                    await manager.AddToRoleAsync(e, Roles.Visitor);
                 }
                 
                 return RedirectToAction("Login");

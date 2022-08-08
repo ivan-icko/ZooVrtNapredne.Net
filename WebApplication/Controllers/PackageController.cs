@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace WebApplication.Controllers
 {
@@ -17,14 +19,16 @@ namespace WebApplication.Controllers
     {
         private readonly IUnitOfWork uow;
         private readonly IWebHostEnvironment hostingEnvironment;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         [BindProperty]
-        public PackageViewModel ModelVM { get; set; }
+        public PackageViewModel PackageVm { get; set; }
 
-        public PackageController(IUnitOfWork iow,IWebHostEnvironment web)
+        public PackageController(IUnitOfWork iow,IWebHostEnvironment web,IHttpContextAccessor accessor)
         {
             this.uow = iow;
             this.hostingEnvironment = web;
+            this.httpContextAccessor = accessor;
         }
 
 
@@ -98,7 +102,7 @@ namespace WebApplication.Controllers
             var animals = uow.AnimalRepository.GetAll();
             var otherAnimals = animals.Except(p.Animals);
 
-            ModelVM = new PackageViewModel()
+            PackageVm = new PackageViewModel()
             {
                 PackageId = id,
                 Duration = p.DurationInHours,
@@ -109,16 +113,16 @@ namespace WebApplication.Controllers
             };
 
 
-            if (ModelVM is null)
+            if (PackageVm is null)
             {
                 return NotFound();
             }
-            return View(ModelVM);
+            return View(PackageVm);
         }
         [HttpPost, ActionName("Edit")]
         public IActionResult EditPost(PackageViewModel v)
         {
-            Package p = uow.PackageRepository.SearchById(ModelVM.PackageId);
+            Package p = uow.PackageRepository.SearchById(PackageVm.PackageId);
 
             if (!ModelState.IsValid)
             {
@@ -172,5 +176,24 @@ namespace WebApplication.Controllers
                 uow.PackageRepository.Update(savedPackage);
             }
         }
+
+
+        public IActionResult Apply(int id)
+        {
+            Package p = uow.PackageRepository.SearchById(id);
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            ApplyViewModel vm = new ApplyViewModel();
+            vm.Name = p.Name;
+            vm.PackageId = p.PackageId;
+            vm.Price = p.Price;
+            vm.UserName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
+            //vm.UserLastName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+            vm.Animals = p.Animals.Select(a=>new SelectListItem() {Text=a.Type,Value=a.Id.ToString() }).ToList();
+
+            return View(vm);
+        }
+
+
     }
 }
