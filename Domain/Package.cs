@@ -13,6 +13,9 @@ namespace Domain
         public double DurationInHours { get; set; }
         public double Price { get; set; }
         public string ImagePath { get; set; }
+        public int FreePlaces { get; set; }
+
+        public List<User> Users { get; set; }
 
 
         public List<Animal> Animals { get; set; }

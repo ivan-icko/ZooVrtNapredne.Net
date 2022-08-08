@@ -72,6 +72,7 @@ namespace WebApplication.Controllers
                 PackageId = m.PackageId,
                 ImagePath =m.ImagePath,
                 Price = m.Price,
+                FreePlaces = m.FreePlaces,
                 Animals = m.Animals.Select(a => new SelectListItem(a.Type, a.Id.ToString())).ToList()
 
             }).ToList();
@@ -187,6 +188,7 @@ namespace WebApplication.Controllers
             vm.Name = p.Name;
             vm.PackageId = p.PackageId;
             vm.Price = p.Price;
+            vm.FreePlaces = p.FreePlaces;
             vm.UserName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
             //vm.UserLastName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
             vm.Animals = p.Animals.Select(a=>new SelectListItem() {Text=a.Type,Value=a.Id.ToString() }).ToList();

@@ -13,11 +13,11 @@ namespace WebApplication.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly UserManager<Employee> manager;
-        private readonly SignInManager<Employee> signIn;
+        private readonly UserManager<User> manager;
+        private readonly SignInManager<User> signIn;
         private readonly RoleManager<IdentityRole<int>> roleManager;
 
-        public AuthController(UserManager<Employee> manager,SignInManager<Employee> signIn,RoleManager<IdentityRole<int>> roleManager)
+        public AuthController(UserManager<User> manager,SignInManager<User> signIn,RoleManager<IdentityRole<int>> roleManager)
         {
             this.manager = manager;
             this.signIn = signIn;
@@ -28,7 +28,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromForm]RegisterViewModel register)
         {
-            Employee e = new Employee()
+            User e = new User()
             {
                 FirstName = register.FirstName,
                 LastName = register.LastName,

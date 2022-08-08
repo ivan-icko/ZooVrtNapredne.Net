@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace WebApplication.Models
         public string UserName { get; set; }
         public string  UserLastName { get; set; }
         public int NumerOfPersons { get; set; } = 1;
+        //[Range(1,FreePlaces, ErrorMessage = "Number not valid")]
+        public int FreePlaces { get; set; } = 1;
 
         public List<SelectListItem> Animals { get; set; } = new List<SelectListItem>();
 

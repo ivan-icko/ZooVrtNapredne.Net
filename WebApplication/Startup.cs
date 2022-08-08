@@ -39,7 +39,7 @@ namespace WebApplication
 
             services.AddHttpContextAccessor();
 
-            services.AddIdentity<Employee, IdentityRole<int>>(opt=> {
+            services.AddIdentity<User, IdentityRole<int>>(opt=> {
                 opt.User.AllowedUserNameCharacters = null;
             }).AddEntityFrameworkStores<AnimalContext>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();

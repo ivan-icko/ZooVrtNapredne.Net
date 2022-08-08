@@ -4,14 +4,16 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Domain.Migrations
 {
     [DbContext(typeof(AnimalContext))]
-    partial class AnimalContextModelSnapshot : ModelSnapshot
+    [Migration("20220808192207_AddedFreeSeats")]
+    partial class AddedFreeSeats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,34 +62,7 @@ namespace Domain.Migrations
                     b.ToTable("Animals");
                 });
 
-            modelBuilder.Entity("Domain.Package", b =>
-                {
-                    b.Property<int>("PackageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("DurationInHours")
-                        .HasColumnType("float");
-
-                    b.Property<int>("FreePlaces")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.HasKey("PackageId");
-
-                    b.ToTable("Packages");
-                });
-
-            modelBuilder.Entity("Domain.User", b =>
+            modelBuilder.Entity("Domain.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -158,6 +133,33 @@ namespace Domain.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Domain.Package", b =>
+                {
+                    b.Property<int>("PackageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("DurationInHours")
+                        .HasColumnType("float");
+
+                    b.Property<int>("FreePlaces")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("PackageId");
+
+                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("Domain.Vet", b =>
@@ -305,21 +307,6 @@ namespace Domain.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PackageUser", b =>
-                {
-                    b.Property<int>("PackagesPackageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PackagesPackageId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("PackageUser");
-                });
-
             modelBuilder.Entity("AnimalPackage", b =>
                 {
                     b.HasOne("Domain.Animal", null)
@@ -357,7 +344,7 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Employee", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -366,7 +353,7 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Employee", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -381,7 +368,7 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Employee", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -390,24 +377,9 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Employee", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PackageUser", b =>
-                {
-                    b.HasOne("Domain.Package", null)
-                        .WithMany()
-                        .HasForeignKey("PackagesPackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

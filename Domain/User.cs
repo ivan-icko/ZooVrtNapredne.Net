@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Employee: IdentityUser<int>
+    public class User: IdentityUser<int>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public List<Package> Packages { get; set; }
+
     }
 }
