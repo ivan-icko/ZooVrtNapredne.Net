@@ -51,7 +51,7 @@ namespace DataAccessLayer.Implementations
 
         public void Update(Package entity)
         {
-            throw new NotImplementedException();
+            context.Update(entity);
         }
     }
 }

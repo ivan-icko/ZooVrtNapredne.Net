@@ -66,6 +66,7 @@ namespace WebApplication.Controllers
                 Name = m.Name,
                 Duration = m.DurationInHours,
                 PackageId = m.PackageId,
+                ImagePath =m.ImagePath,
                 Price = m.Price,
                 Animals = m.Animals.Select(a => new SelectListItem(a.Type, a.Id.ToString())).ToList()
 
@@ -93,7 +94,7 @@ namespace WebApplication.Controllers
 
         public IActionResult Edit(int id)
         {
-            Package p = uow.PackageRepository.SearchById(new Package() { PackageId = id });
+            Package p = uow.PackageRepository.SearchById(id);
             var animals = uow.AnimalRepository.GetAll();
             var otherAnimals = animals.Except(p.Animals);
 
@@ -129,6 +130,7 @@ namespace WebApplication.Controllers
             p.DurationInHours = v.Duration;
             //ovde ide punjenje zivotinja za paket
             List<Animal> animals = new List<Animal>();
+            
            foreach(int num in v.NewAnimalsInPackage)
             {
                 animals.Add(uow.AnimalRepository.SearchById(num));
@@ -147,7 +149,7 @@ namespace WebApplication.Controllers
 
         private void UploadImageIfAvalible(Package a, int id)
         {
-            var savedAnimal = uow.PackageRepository.SearchById(id);
+            var savedPackage = uow.PackageRepository.SearchById(id);
             var animalId = id;
 
             string wwwroothPath = hostingEnvironment.WebRootPath;
@@ -166,8 +168,8 @@ namespace WebApplication.Controllers
                 }
                 //sacuvaj imgPath u bazi
 
-                savedAnimal.ImagePath = RelativeImagePath;
-                uow.PackageRepository.Update(savedAnimal);
+                savedPackage.ImagePath = RelativeImagePath;
+                uow.PackageRepository.Update(savedPackage);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace WebApplication.Models
         public List<SelectListItem> Animals { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> OtherAnimals { get; set; } = new List<SelectListItem>();
 
-        public List<int> NewAnimalsInPackage { get; set; }
+        public List<int> NewAnimalsInPackage { get; set; } = new List<int>();
 
     }
 }
