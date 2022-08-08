@@ -122,18 +122,18 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        $(function () {
-            $("#but1").click(function () {
-                $("#listbox1 option:selected").each(function () {
-                    $(this).remove().appendTo("#listbox2");
-                });
-            });
-            $("#but2").click(function () {
-                $("#listbox2 option:selected").each(function () {
-                    $(this).remove().appendTo("#listbox1");
-                });
-            });
-        });
+
+
+        function validateFree() {
+            var txtVal = document.getElementById("button1").value;
+
+            if (txtVal >= 1 && txtVal <= @Model.FreePlaces) {
+                return true;
+            }
+            else
+                alert('Age must be between 18-25');
+            return false;
+        }
 
 
         //funkcija za selektovanje svih zivotinja koje ostaju u paketu, nakon submita

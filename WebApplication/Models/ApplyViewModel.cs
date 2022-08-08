@@ -17,8 +17,9 @@ namespace WebApplication.Models
         public string UserName { get; set; }
         public string  UserLastName { get; set; }
         public int NumerOfPersons { get; set; } = 1;
-        //[Range(1,FreePlaces, ErrorMessage = "Number not valid")]
-        public int FreePlaces { get; set; } = 1;
+        //[Range(1,, ErrorMessage = "Number not valid")]
+        //[Range(1, , ErrorMessage = "Not with in the valid mileage range")]
+        public  int FreePlaces { get; set; } = 1;
 
         public List<SelectListItem> Animals { get; set; } = new List<SelectListItem>();
 
