@@ -143,6 +143,7 @@ namespace WebApplication.Controllers
                 PackageId = id,
                 Duration = p.DurationInHours,
                 Name = p.Name,
+                FreePlaces = p.FreePlaces,
                 Price = p.Price,
                 Animals = p.Animals.Select(p => new SelectListItem(p.Type, p.Id.ToString())).ToList(),
                 OtherAnimals = otherAnimals.Select(p => new SelectListItem(p.Type, p.Id.ToString())).ToList()
@@ -168,6 +169,7 @@ namespace WebApplication.Controllers
             p.Name = v.Name;
             p.Price = v.Price;
             p.DurationInHours = v.Duration;
+            p.FreePlaces = v.FreePlaces;
             //ovde ide punjenje zivotinja za paket
             List<Animal> animals = new List<Animal>();
             
