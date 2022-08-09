@@ -11,7 +11,9 @@ namespace Domain
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<Package> Packages { get; set; } = new List<Package>();
+        //public List<Package> Packages { get; set; } = new List<Package>();
+        public List<PU> PUs { get; set; } = new List<PU>();
+
 
     }
 }

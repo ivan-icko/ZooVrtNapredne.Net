@@ -244,8 +244,10 @@ namespace WebApplication.Controllers
             p.FreePlaces -= vm.NumerOfPersons;
 
             User u = uow.UserRepository.SearchById(int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value));
-            u.Packages.Add(p);
-            p.Users.Add(u);
+           
+            u.PUs.Add(new PU() {Package=p,User=u,TimeOfReservation=DateTime.Now });
+            
+
 
             uow.Save();
             

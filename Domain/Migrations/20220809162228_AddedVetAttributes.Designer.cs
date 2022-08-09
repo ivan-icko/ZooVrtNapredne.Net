@@ -4,14 +4,16 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Domain.Migrations
 {
     [DbContext(typeof(AnimalContext))]
-    partial class AnimalContextModelSnapshot : ModelSnapshot
+    [Migration("20220809162228_AddedVetAttributes")]
+    partial class AddedVetAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,24 +60,6 @@ namespace Domain.Migrations
                     b.HasIndex("VetId");
 
                     b.ToTable("Animals");
-                });
-
-            modelBuilder.Entity("Domain.PU", b =>
-                {
-                    b.Property<int>("PackageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeOfReservation")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("PackageId", "UserId", "TimeOfReservation");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PU");
                 });
 
             modelBuilder.Entity("Domain.Package", b =>
@@ -335,6 +319,21 @@ namespace Domain.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PackageUser", b =>
+                {
+                    b.Property<int>("PackagesPackageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PackagesPackageId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("PackageUser");
+                });
+
             modelBuilder.Entity("AnimalPackage", b =>
                 {
                     b.HasOne("Domain.Animal", null)
@@ -359,25 +358,6 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Vet");
-                });
-
-            modelBuilder.Entity("Domain.PU", b =>
-                {
-                    b.HasOne("Domain.Package", "Package")
-                        .WithMany("PUs")
-                        .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.User", "User")
-                        .WithMany("PUs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Package");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -431,14 +411,19 @@ namespace Domain.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Package", b =>
+            modelBuilder.Entity("PackageUser", b =>
                 {
-                    b.Navigation("PUs");
-                });
+                    b.HasOne("Domain.Package", null)
+                        .WithMany()
+                        .HasForeignKey("PackagesPackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("Domain.User", b =>
-                {
-                    b.Navigation("PUs");
+                    b.HasOne("Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Vet", b =>
