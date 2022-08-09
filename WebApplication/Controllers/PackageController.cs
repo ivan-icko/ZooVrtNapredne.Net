@@ -167,6 +167,7 @@ namespace WebApplication.Controllers
             }
 
             p.Name = v.Name;
+
             p.Price = v.Price;
             p.DurationInHours = v.Duration;
             p.FreePlaces = v.FreePlaces;
