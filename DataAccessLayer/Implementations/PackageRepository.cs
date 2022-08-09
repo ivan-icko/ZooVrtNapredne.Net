@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Implementations
 {
-    public class PackageRepository : IpackageRepository
+    public class PackageRepository : IPackageRepository
     {
         private readonly AnimalContext context;
 
@@ -21,7 +21,7 @@ namespace DataAccessLayer.Implementations
 
         public void Add(Package entity)
         {
-            throw new NotImplementedException();
+            context.Add(entity);
         }
 
         public void Delete(Package entity)

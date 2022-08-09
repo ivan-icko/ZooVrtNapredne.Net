@@ -8,7 +8,7 @@ using static DataAccessLayer.Interfaces.IRepository;
 
 namespace DataAccessLayer.Interfaces
 {
-   public interface IpackageRepository:IRepository<Package>
+   public interface IPackageRepository:IRepository<Package>
     {
 
     }

@@ -102,6 +102,8 @@ namespace WebApplication.Controllers
             vm.Vets = vets.Select(p => new SelectListItem(p.VName, p.VetId.ToString())).ToList();
             return View(vm);
         }
+
+
         [HttpPost,ActionName("Create")]
         public IActionResult CreatePost(AnimalViewModel v) 
         {
@@ -115,8 +117,8 @@ namespace WebApplication.Controllers
             uow.AnimalRepository.Add(a);
             uow.Save();
 
-            var savedAnimal = uow.AnimalRepository.SearchBy(animal => animal == a).FirstOrDefault();
-            var animalId = savedAnimal.Id;
+            
+            var animalId = a.Id;
 
             string wwwroothPath = hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
@@ -137,7 +139,7 @@ namespace WebApplication.Controllers
                 }
                 //sacuvaj imgPath u bazi
 
-                savedAnimal.ImagePath = RelativeImagePath;
+                a.ImagePath = RelativeImagePath;
                 uow.Save();
 
             }

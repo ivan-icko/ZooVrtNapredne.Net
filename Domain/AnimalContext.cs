@@ -18,7 +18,7 @@ namespace Domain
 
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Vet> Vets { get; set; }
-        public DbSet<User> Employees { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Package>Packages { get; set; }
        
 
@@ -35,7 +35,8 @@ namespace Domain
 
             modelBuilder.Entity<Package>().HasMany(p => p.Animals).WithMany(a => a.Packages);
             modelBuilder.Entity<Package>().HasMany(p => p.Users).WithMany(u => u.Packages);
-            
+           
+
 
         }
     }

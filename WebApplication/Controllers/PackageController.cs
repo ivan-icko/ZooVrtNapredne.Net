@@ -20,6 +20,7 @@ namespace WebApplication.Controllers
         private readonly IUnitOfWork uow;
         private readonly IWebHostEnvironment hostingEnvironment;
         private readonly IHttpContextAccessor httpContextAccessor;
+        
 
         [BindProperty]
         public PackageViewModel PackageVm { get; set; }
@@ -94,7 +95,41 @@ namespace WebApplication.Controllers
         }
 
 
+        public IActionResult Create()
+        {
+            PackageViewModel vm = new PackageViewModel();
+            var allAnimals = uow.AnimalRepository.GetAll();
 
+            vm.Animals = new List<SelectListItem>();
+            vm.OtherAnimals = allAnimals.Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.Type }).ToList();
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult Create(PackageViewModel vm)
+        {
+            Package p = new Package()
+            {
+                DurationInHours = vm.Duration,
+                FreePlaces = vm.FreePlaces,
+                Name = vm.Name,
+                Price = vm.Price
+            };
+
+            foreach (int num in vm.NewAnimalsInPackage)
+            {
+                p.Animals.Add(uow.AnimalRepository.SearchById(num));
+            }
+
+            uow.PackageRepository.Add(p);
+            uow.Save();
+
+            UploadImageIfAvalible(p, p.PackageId);
+            uow.Save();
+
+            return RedirectToAction("Index");
+        }
 
 
         public IActionResult Edit(int id)
@@ -155,7 +190,7 @@ namespace WebApplication.Controllers
         private void UploadImageIfAvalible(Package a, int id)
         {
             var savedPackage = uow.PackageRepository.SearchById(id);
-            var animalId = id;
+            var packageId = id;
 
             string wwwroothPath = hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
@@ -164,7 +199,7 @@ namespace WebApplication.Controllers
             {
                 var ImagePath = @"images\packages\";
                 var Extension = Path.GetExtension(files[0].FileName);
-                var RelativeImagePath = ImagePath + animalId + Extension;
+                var RelativeImagePath = ImagePath + packageId + Extension;
                 var AbsImagePath = Path.Combine(wwwroothPath, RelativeImagePath);
 
                 using (var fileStream = new FileStream(AbsImagePath, FileMode.Create))
@@ -181,21 +216,39 @@ namespace WebApplication.Controllers
 
         public IActionResult Apply(int id)
         {
+
             Package p = uow.PackageRepository.SearchById(id);
-            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           var userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var user = uow.UserRepository.SearchById(userId);
 
             ApplyViewModel vm = new ApplyViewModel();
             vm.Name = p.Name;
             vm.PackageId = p.PackageId;
             vm.Price = p.Price;
             vm.FreePlaces = p.FreePlaces;
-            vm.UserName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
-            //vm.UserLastName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+            vm.UserName = user.FirstName;
+            vm.UserLastName = user.LastName;
             vm.Animals = p.Animals.Select(a=>new SelectListItem() {Text=a.Type,Value=a.Id.ToString() }).ToList();
 
             return View(vm);
         }
 
+        [HttpPost]
+        public IActionResult Apply(ApplyViewModel vm)
+        {
+            Package p = uow.PackageRepository.SearchById(vm.PackageId);
+            p.FreePlaces -= vm.NumerOfPersons;
+
+            User u = uow.UserRepository.SearchById(int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value));
+            u.Packages.Add(p);
+            p.Users.Add(u);
+
+            uow.Save();
+            
+
+            return RedirectToAction("Index");
+        }
 
     }
 }

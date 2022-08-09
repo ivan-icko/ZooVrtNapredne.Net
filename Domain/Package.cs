@@ -15,9 +15,9 @@ namespace Domain
         public string ImagePath { get; set; }
         public int FreePlaces { get; set; }
 
-        public List<User> Users { get; set; }
+        public List<User> Users { get; set; } = new List<User>();
 
 
-        public List<Animal> Animals { get; set; }
+        public List<Animal> Animals { get; set; } = new List<Animal>();
     }
 }

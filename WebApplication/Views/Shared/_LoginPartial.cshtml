@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Domain
 
-@inject SignInManager<Employee> SignInManager
-@inject UserManager<Employee> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <ul class="nav navbar-nav navbar-right">
     @if (SignInManager.IsSignedIn(User))

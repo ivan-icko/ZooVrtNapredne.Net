@@ -19,12 +19,13 @@ namespace DataAccessLayer.UnitOfWork
             AnimalRepository = new AnimalRepository(context);
             VetRepository = new VetRepository(context);
             PackageRepository = new PackageRepository(context);
-
+            UserRepository = new UserRepository(context);
             
         }
         public IAnimalRepository AnimalRepository { get; set; } 
         public IVetRepository VetRepository { get; set; }
-        public IpackageRepository PackageRepository { get; set; }
+        public IPackageRepository PackageRepository { get; set; }
+        public IUserRepository UserRepository { get; set; }
 
         public void Save()
         {
