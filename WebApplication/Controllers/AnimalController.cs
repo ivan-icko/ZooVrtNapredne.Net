@@ -19,7 +19,7 @@ namespace WebApplication.Controllers
 {
 
     
-    public class ModelController : Controller
+    public class AnimalController : Controller
     {
         public readonly IUnitOfWork uow;
         private readonly IWebHostEnvironment hostingEnvironment;
@@ -28,7 +28,7 @@ namespace WebApplication.Controllers
         public AnimalViewModel ModelVM { get; set; }
 
 
-        public ModelController(IUnitOfWork uow, IWebHostEnvironment h)
+        public AnimalController(IUnitOfWork uow, IWebHostEnvironment h)
         {
             this.uow = uow;
             this.hostingEnvironment = h;

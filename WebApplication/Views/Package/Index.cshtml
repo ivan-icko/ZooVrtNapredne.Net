@@ -87,6 +87,14 @@
                     </div>
                 </td>
             }
+            else
+            {
+                <td class="text-right">
+                    <div class="btn-group">
+                        <a type="button" class="btn btn-primary" href="/Auth/Login/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                    </div>
+                </td>
+            }
 
 
             @if (User.IsInRole(Roles.Admin))

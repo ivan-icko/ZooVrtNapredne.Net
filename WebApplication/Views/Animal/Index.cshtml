@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    ViewData["Controller"] = "Model";
+    ViewData["Controller"] = "Animal";
     ViewData["Action"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -26,7 +26,7 @@
         <h2 class="text-info">Zoo</h2>
     </div>
 
-    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Visitor))
+    @if (User.IsInRole(Roles.Admin))
     {
         <div class="col-6 text-right">
             <a class="btn btn-info" asp-action="Create"> Add new animal</a>
@@ -69,11 +69,11 @@
 
             <td>@item.VetName</td>
 
-            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Visitor))
+            @if (User.IsInRole(Roles.Admin))
             {
                 <td class="text-right">
                     <div class="btn-group">
-                        <a type="button" class="btn btn-primary" href="/Model/Edit/@item.AnimalId"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a type="button" class="btn btn-primary" href="/Animal/Edit/@item.AnimalId"><i class="fa-solid fa-pen-to-square"></i></a>
                         <form method="post" action="Delete">
                             <button onclick="if (!confirm('Are you sure you want to delete this?')){return false}" type="submit" class="btn btn-danger rounded=0" asp-action="Delete" asp-route-id="@item.AnimalId"><i class="fa-solid fa-trash-can"></i></button>
                         </form>

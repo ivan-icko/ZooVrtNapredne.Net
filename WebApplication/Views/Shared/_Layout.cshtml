@@ -41,10 +41,10 @@
                                 Menu
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Model" asp-action="Index">Animals</a>
+                                <a class="dropdown-item" asp-controller="Animal" asp-action="Index">Animals</a>
                                 @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Visitor))
                                 {
-                                    <a class="dropdown-item" asp-controller="Make" asp-action="Index">Vets</a>
+                                    <a class="dropdown-item" asp-controller="Vet" asp-action="Index">Vets</a>
 
                                 }
                                 <a class="dropdown-item" asp-controller="Package" asp-action="Index">Packages</a>

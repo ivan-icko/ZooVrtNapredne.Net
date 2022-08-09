@@ -92,7 +92,7 @@ namespace WebApplication.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Model");
+                return RedirectToAction("Index", "Animal");
             }
 
             return View();
