@@ -42,7 +42,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-controller="Animal" asp-action="Index">Animals</a>
-                                @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Visitor))
+                                @if (User.IsInRole(Roles.Admin))
                                 {
                                     <a class="dropdown-item" asp-controller="Vet" asp-action="Index">Vets</a>
 

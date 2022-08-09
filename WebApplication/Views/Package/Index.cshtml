@@ -79,7 +79,16 @@
             </td>
 
             <td>@item.Price din</td>
-            @if (User.IsInRole(Roles.Visitor))
+            @if (User.IsInRole(Roles.Admin))
+            {
+                <td class="text-right">
+                    <div class="btn-group">
+                        <a type="button" class="btn btn-primary" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                        <a type="button" class="btn btn-primary" href="/Package/Edit/@item.PackageId"><i class="fa-solid fa-pen"></i></a>
+                    </div>
+                </td>
+            }
+            else if (User.IsInRole(Roles.Visitor))
             {
                 <td class="text-right">
                     <div class="btn-group">
@@ -97,14 +106,6 @@
             }
 
 
-            @if (User.IsInRole(Roles.Admin))
-            {
-                <td class="text-right">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-primary" href="/Package/Edit/@item.PackageId"><i class="fa-solid fa-pen"></i></a>
-                    </div>
-                </td>
-            }
         </tr>
             }
         </table>
