@@ -23,12 +23,24 @@
                 <th>
                     Vet
                 </th>
+                <th>
+                    JMBG
+                </th>
+                <th>
+                    Phone number
+                </th>
+                <th>
+                    Date of birth
+                </th>
                 <th></th>
             </tr>
             @foreach (var item in Model)
             {
                 <tr>
                     <td>@item.VName</td>
+                    <td>@item.JMBG</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.DateOfBirth</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <a type="button" class="btn btn-primary" href="/Vet/Edit/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>

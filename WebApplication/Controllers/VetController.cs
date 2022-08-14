@@ -25,7 +25,13 @@ namespace WebApplication.Controllers
         {
             var model = uow.VetRepository.GetAll();
             List<VetViewModel> list = new List<VetViewModel>();
-            list = model.Select(m => new VetViewModel() { VName = m.VName,Id = m.VetId }).ToList();
+            list = model.Select(m => new VetViewModel() 
+            { VName = m.VName,
+                Id = m.VetId,
+                PhoneNumber=m.PhoneNumber,
+                JMBG = m.JMBG,
+                DateOfBirth = m.DateOfBIrth
+            }).ToList();
             return View(list);
         }
 
@@ -74,7 +80,11 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-            VetViewModel model = new VetViewModel() { VName = vet.VName, Id = vet.VetId};
+            VetViewModel model = new VetViewModel() { VName = vet.VName, Id = vet.VetId,
+                PhoneNumber = vet.PhoneNumber,
+                JMBG = vet.JMBG,
+                DateOfBirth = vet.DateOfBIrth
+            };
             return View(model);
         }
 
@@ -87,7 +97,11 @@ namespace WebApplication.Controllers
                 return View(vet);
             }
             Vet v = uow.VetRepository.SearchById(vet.Id);
+
             v.VName = vet.VName;
+            v.JMBG = vet.JMBG;
+            v.PhoneNumber = vet.PhoneNumber;
+            v.DateOfBIrth = vet.DateOfBirth;
 
             uow.VetRepository.Update(v);
             uow.Save();
