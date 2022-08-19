@@ -8,18 +8,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <br />
 <br />
+<div class="div1">
+    <div>
+        <h2>Weather</h2>
+        <p id="name"></p>
+        <a id="temp">Temp</a>
+        <p id="humidity"></p>
+    </div>
+    <button class="btn btn-info">Get weather</button>
+
+</div>
 <br />
 
 <form asp-action="Index" method="get">
-    <div>
+
+    <div class="div2">
         <p>
             Find package: <input type="text" name="searchString" value="@ViewBag.CurrentFilter" />
             <input type="submit" value="Search" class="btn btn-info" />
             <a asp-action="Index">Remove filter</a>
         </p>
     </div>
+    <div>
+
+    </div>
+
 </form>
 <div class="row">
     <div class="col-6">
@@ -53,60 +69,60 @@
             </tr>
             @foreach (var item in Model.Data)
             {
-        <tr>
-            <td>
-                @if (String.IsNullOrEmpty(item.ImagePath))
-                {
-                    <img src="@Url.Content("/"+"images\\packages\\no.png")" width="400" height="200" />
-                }
-                else
-                {
-                    <img src="@Url.Content("/"+item.ImagePath)" width="400" height="200" />
-                }
+                <tr>
+                    <td>
+                        @if (String.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <img src="@Url.Content("/"+"images\\packages\\no.png")" width="400" height="200" />
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("/"+item.ImagePath)" width="400" height="200" />
+                        }
 
-            </td>
-            <td>@item.Name</td>
-            <td>@item.FreePlaces</td>
-            <td>
-                @foreach (var name in item.Animals)
-                {
-                    <b>@name.Text</b>
-                    <br />
-                }
-            </td>
-            <td>
-                @item.Duration h
-            </td>
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.FreePlaces</td>
+                    <td>
+                        @foreach (var name in item.Animals)
+                        {
+                            <b>@name.Text</b>
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        @item.Duration h
+                    </td>
 
-            <td>@item.Price din</td>
-            @if (User.IsInRole(Roles.Admin))
-            {
-                <td class="text-right">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-primary" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
-                        <a type="button" class="btn btn-primary" href="/Package/Edit/@item.PackageId"><i class="fa-solid fa-pen"></i></a>
-                    </div>
-                </td>
-            }
-            else if (User.IsInRole(Roles.Visitor))
-            {
-                <td class="text-right">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-primary" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
-                    </div>
-                </td>
-            }
-            else
-            {
-                <td class="text-right">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-primary" href="/Auth/Login/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
-                    </div>
-                </td>
-            }
+                    <td>@item.Price din</td>
+                    @if (User.IsInRole(Roles.Admin))
+                    {
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-primary" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                                <a type="button" class="btn btn-primary" href="/Package/Edit/@item.PackageId"><i class="fa-solid fa-pen"></i></a>
+                            </div>
+                        </td>
+                    }
+                    else if (User.IsInRole(Roles.Visitor))
+                    {
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-primary" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                            </div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-primary" href="/Auth/Login/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                            </div>
+                        </td>
+                    }
 
 
-        </tr>
+                </tr>
             }
         </table>
 
@@ -114,3 +130,19 @@
 
     </div>
 </div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            $("button").click(function () {
+                $.get("@Url.Action("GetWeather","Package")", function (response) {
+                    console.log(response);
+                    $("#name").text(response.name);
+                    $("#temp").text(response.main.temp);
+                    //$("temp").text(response.main.temp);
+                });
+            });
+        });
+    </script>
+}

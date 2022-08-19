@@ -255,5 +255,20 @@ namespace WebApplication.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+
+        public IActionResult Weather()
+        {
+            return View();
+        }
+
+        public JsonResult GetWeather()
+        {
+            WeatherModel vm = new WeatherModel();
+            var a = Json(vm.GetWeatherforecast());
+            return a;
+        }
+
     }
 }
