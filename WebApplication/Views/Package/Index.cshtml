@@ -14,7 +14,7 @@
 <div class="div1">
     <div>
         <h2>Weather</h2>
-        <p id="name"></p>
+        <div>Belgrade</div>
         <a id="temp">Temp</a>
         <p id="humidity"></p>
     </div>
@@ -139,7 +139,7 @@
                 $.get("@Url.Action("GetWeather","Package")", function (response) {
                     console.log(response);
                     $("#name").text(response.name);
-                    $("#temp").text(response.main.temp);
+                    $("#temp").text((response.main.temp - 273.15).toFixed(1));
                     //$("temp").text(response.main.temp);
                 });
             });
