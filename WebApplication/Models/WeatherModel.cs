@@ -7,14 +7,11 @@ using Newtonsoft.Json;
 
 namespace WebApplication.Models
 {
-    public class Some
-    {
-        public string Description { get; set; }
-    }
 
     public class Weather
     {
-        public Some Some { get; set; }
+        //public int Id { get; set; }
+        public string Description { get; set; }
     }
 
     public class Main
@@ -27,7 +24,7 @@ namespace WebApplication.Models
     public class O
     {
         public string Name { get; set; }
-        //public Weather Weather { get; set; }
+        public List<Weather> Weather { get; set; }
         public Main Main { get; set; }
     }
 

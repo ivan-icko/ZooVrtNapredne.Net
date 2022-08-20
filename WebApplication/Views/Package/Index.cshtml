@@ -12,12 +12,13 @@
 <br />
 <br />
 <div class="div1">
-    <div>
-        <h2>Weather</h2>
-        <div>Belgrade</div>
-        <a id="temp">Temp</a>
-        <p id="humidity"></p>
-    </div>
+    
+        <h5>Weather in Belgrade</h5>
+        
+        Temp - <a id="temp"></a><br />
+        Humididy - <a id="humidity"></a><br />
+        Desc - <a id="desc"></a><br />
+    
     <button class="btn btn-info">Get weather</button>
 
 </div>
@@ -138,8 +139,10 @@
             $("button").click(function () {
                 $.get("@Url.Action("GetWeather","Package")", function (response) {
                     console.log(response);
-                    $("#name").text(response.name);
-                    $("#temp").text((response.main.temp - 273.15).toFixed(1));
+                    //$("#name").text(response.name);
+                    $("#temp").text((response.main.temp - 273.15).toFixed(1) +" °C");
+                    $("#desc").text((response.weather[0].description));
+                    $("#humidity").text(response.main.humidity+" %");
                     //$("temp").text(response.main.temp);
                 });
             });
