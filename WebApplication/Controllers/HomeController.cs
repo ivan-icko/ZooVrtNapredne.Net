@@ -37,5 +37,12 @@ namespace WebApplication.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        public JsonResult GetRandomAnimal()
+        {
+            RandomAnimalModel ra = new RandomAnimalModel();
+            return Json(ra.GetRandomAnimal());
+        }
     }
 }

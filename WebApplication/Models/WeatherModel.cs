@@ -36,6 +36,7 @@ namespace WebApplication.Models
             var client = new WebClient();
             var content = client.DownloadString(url);
             var o = JsonConvert.DeserializeObject<O>(content);
+
             return o;
         }
     }
