@@ -265,7 +265,7 @@ namespace WebApplication.Controllers
 
         public JsonResult GetWeather()
         {
-            WeatherModel vm = new WeatherModel();
+            WeatherViewModel vm = new WeatherViewModel();
             var a = Json(vm.GetWeatherforecast());
             return a;
         }

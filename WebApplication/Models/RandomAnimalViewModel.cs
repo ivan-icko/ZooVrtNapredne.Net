@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Models
 {
-    public class RandomAnimal
+    public class RandomAnimalViewModel
     {
         public string Name { get; set; }
         public string Latin_Name { get; set; }
@@ -24,14 +24,14 @@ namespace WebApplication.Models
         public string Image_Link { get; set; }
     }
 
-    public class RandomAnimalModel
+    public class RandomAnimal
     {
         public Object GetRandomAnimal()
         {
             string url = "https://zoo-animal-api.herokuapp.com/animals/rand";
             var client = new WebClient();
             var content = client.DownloadString(url);
-            var animal = JsonConvert.DeserializeObject<RandomAnimal>(content);
+            var animal = JsonConvert.DeserializeObject<RandomAnimalViewModel>(content);
             return animal;
         }
     }

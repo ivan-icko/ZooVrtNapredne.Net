@@ -28,7 +28,7 @@ namespace WebApplication.Models
         public Main Main { get; set; }
     }
 
-    public class WeatherModel
+    public class WeatherViewModel
     {
         public Object GetWeatherforecast()
         {
