@@ -13,6 +13,9 @@
         </div>
         <div class="col-4">
             <input asp-for="VName" class="form-control" />
+            <div class="form-group row-cols-auto">
+                <span asp-validation-for=VName class="text-danger"></span>
+            </div>
         </div>
 
         <div class="col-2">
@@ -20,6 +23,9 @@
         </div>
         <div class="col-4">
             <input asp-for="JMBG" class="form-control" />
+            <div class="form-group row-cols-auto">
+                <span asp-validation-for=JMBG class="text-danger"></span>
+            </div>
         </div>
 
         <div class="col-2">
@@ -27,6 +33,9 @@
         </div>
         <div class="col-4">
             <input asp-for="PhoneNumber" class="form-control" />
+            <div class="form-group row-cols-auto">
+                <span asp-validation-for=PhoneNumber class="text-danger"></span>
+            </div>
         </div>
 
         <div class="col-2">
@@ -34,6 +43,9 @@
         </div>
         <div class="col-4">
             <input type="date" asp-for="DateOfBirth" class="form-control" />
+            <div class="form-group row-cols-auto">
+                <span asp-validation-for=DateOfBirth class="text-danger"></span>
+            </div>
         </div>
 
         <div class="form-group">

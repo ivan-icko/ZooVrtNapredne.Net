@@ -10,7 +10,7 @@ namespace WebApplication.Models
 {
     public class AnimalViewModel
     {
-        [Required(ErrorMessage = "Ovako se postavlja poruka")]
+        [Required(ErrorMessage = "Type not good")]
         public string Type { get; set; }
         [Range(1,int.MaxValue, ErrorMessage = "Number not good")]
         public int Age { get; set; }

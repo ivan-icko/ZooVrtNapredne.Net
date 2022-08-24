@@ -74,6 +74,7 @@ namespace WebApplication.Controllers
                 ImagePath =m.ImagePath,
                 Price = m.Price,
                 FreePlaces = m.FreePlaces,
+                DateTime = m.DateTime,
                 Animals = m.Animals.Select(a => new SelectListItem(a.Type, a.Id.ToString())).ToList()
 
             }).ToList();
@@ -102,6 +103,7 @@ namespace WebApplication.Controllers
 
             vm.Animals = new List<SelectListItem>();
             vm.OtherAnimals = allAnimals.Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.Type }).ToList();
+            
 
             return View(vm);
         }
@@ -109,12 +111,19 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult Create(PackageViewModel vm)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return Create();
+            }
+
             Package p = new Package()
             {
                 DurationInHours = vm.Duration,
                 FreePlaces = vm.FreePlaces,
                 Name = vm.Name,
-                Price = vm.Price
+                Price = vm.Price,
+                DateTime = vm.DateTime
             };
 
             foreach (int num in vm.NewAnimalsInPackage)
@@ -142,6 +151,7 @@ namespace WebApplication.Controllers
             {
                 PackageId = id,
                 Duration = p.DurationInHours,
+                DateTime = p.DateTime,
                 Name = p.Name,
                 FreePlaces = p.FreePlaces,
                 Price = p.Price,
@@ -163,7 +173,7 @@ namespace WebApplication.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View();
+                return Edit(p.PackageId);
             }
 
             p.Name = v.Name;

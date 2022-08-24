@@ -15,6 +15,8 @@ namespace Domain
         public string ImagePath { get; set; }
         public int FreePlaces { get; set; }
 
+        public DateTime DateTime { get; set; }
+
         //public List<User> Users { get; set; } = new List<User>();
 
         public List<PU> PUs { get; set; } = new List<PU>();
