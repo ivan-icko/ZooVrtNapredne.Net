@@ -26,21 +26,33 @@
 
 <form asp-action="Index" method="get">
 
+
+
     <div class="div2">
+        <div>
+            <p>Only with free places <span><input type="checkbox" class="custom-checkbox" style="width: 20px; height: 20px;" /></span></p>
+        </div>
         <p>
             Find package: <input type="text" name="searchString" value="@ViewBag.CurrentFilter" />
             <input type="submit" value="Search" class="btn btn-info" />
             <a asp-action="Index">Remove filter</a>
+
         </p>
+
     </div>
     <div>
-
+       <br />
+        <br />
     </div>
 
 </form>
 <div class="row">
     <div class="col-6">
+
         <h2 class="text-info">Zoo</h2>
+        
+
+
     </div>
 
     @if (User.IsInRole(Roles.Admin))
