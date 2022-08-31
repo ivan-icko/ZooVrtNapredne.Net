@@ -34,17 +34,26 @@ namespace WebApplication.Controllers
 
 
 
-        public IActionResult Index(string searchString, string sortOrder, int pageNumber = 1, int pageSize = 3)
+        public IActionResult Index(string searchString, string sortOrder,string sortOrderDate, int pageNumber = 1, int pageSize = 3)
         {
 
             ViewBag.CurrentSortOrder = sortOrder;
             ViewBag.CurrentFilter = searchString;
-            ViewBag.AgeSortParam = String.IsNullOrEmpty(sortOrder) ? "age_desc" : "";
+
+
+            ViewBag.AgeSortParam = string.IsNullOrEmpty(sortOrder) ? "age_desc" : "";
+            ViewBag.DateSortParam = string.IsNullOrEmpty(sortOrderDate) ? "date_desc" : "";
 
             int ExcludeRecords = (pageNumber * pageSize) - pageSize;
 
             var model = from a in uow.PackageRepository.GetAll() select a;
             var packageCount = model.Count();
+
+
+            if(sortOrder == null && sortOrderDate == null)
+            {
+                model = model.OrderByDescending(b => b.DateTime);
+            }
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -52,15 +61,34 @@ namespace WebApplication.Controllers
                 packageCount = model.Count();
             }
 
-            switch (sortOrder)
+            if (sortOrderDate != null && sortOrder == null)
             {
-                case "age_desc":
-                    model = model.OrderByDescending(b => b.Price);
-                    break;
-                default:
-                    model = model.OrderBy(b => b.Price);
-                    break;
+                switch (sortOrderDate)
+                {
+                    case "date_desc":
+                        model = model.OrderByDescending(b => b.DateTime);
+                        break;
+                    default:
+                        model = model.OrderBy(b => b.DateTime);
+                        break;
+                }
             }
+
+            if (sortOrder != null && sortOrderDate == null)
+            {
+                switch (sortOrder)
+                {
+                    case "age_desc":
+                        model = model.OrderByDescending(b => b.Price);
+                        break;
+                    default:
+                        model = model.OrderBy(b => b.Price);
+                        break;
+                }
+            }
+
+
+
 
             model = model.Skip(ExcludeRecords).Take(pageSize);
 
@@ -181,6 +209,7 @@ namespace WebApplication.Controllers
             p.Price = v.Price;
             p.DurationInHours = v.Duration;
             p.FreePlaces = v.FreePlaces;
+            p.DateTime = v.DateTime;
             //ovde ide punjenje zivotinja za paket
             List<Animal> animals = new List<Animal>();
             

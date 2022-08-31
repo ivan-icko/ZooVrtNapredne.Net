@@ -55,7 +55,11 @@
             <tr class="table-info">
                 <th>Package</th>
                 <th>Name</th>
-                <th>Date-time</th>
+                <th>
+                    <a asp-action="Index"
+                       asp-route-sortOrderDate="@ViewBag.DateSortParam"
+                       asp-route-pageNumber="@Model.PageNumber">Date-time</a>
+                </th>
                 <th>Free places</th>
                 <th>Animals</th>
                 <th>
@@ -106,16 +110,16 @@
                             </div>
                         </td>
                     }
-                    else if (User.IsInRole(Roles.Admin)&& item.FreePlaces==0)
+                    else if (User.IsInRole(Roles.Admin) && item.FreePlaces == 0)
                     {
                         <td class="text-right">
                             <div class="btn-group">
-                                <a type="button"  class="btn btn-primary disabled" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                                <a type="button" class="btn btn-primary disabled" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
                                 <a type="button" class="btn btn-primary" href="/Package/Edit/@item.PackageId"><i class="fa-solid fa-pen"></i></a>
                             </div>
                         </td>
                     }
-                    else if (User.IsInRole(Roles.Visitor) && item.FreePlaces>0)
+                    else if (User.IsInRole(Roles.Visitor) && item.FreePlaces > 0)
                     {
                         <td class="text-right">
                             <div class="btn-group">
