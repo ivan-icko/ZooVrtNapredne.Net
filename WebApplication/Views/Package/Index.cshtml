@@ -12,13 +12,13 @@
 <br />
 <br />
 <div class="div1">
-    
-        <h5>Weather in Belgrade</h5>
-        
-        Temp - <a id="temp"></a><br />
-        Humididy - <a id="humidity"></a><br />
-        Desc - <a id="desc"></a><br />
-    
+
+    <h5>Weather in Belgrade</h5>
+
+    Temp - <a id="temp"></a><br />
+    Humididy - <a id="humidity"></a><br />
+    Desc - <a id="desc"></a><br />
+
     <button class="btn btn-info">Get weather</button>
 
 </div>
@@ -48,7 +48,6 @@
         <div class="col-6 text-right">
             <a class="btn btn-info" asp-action="Create">Add new package</a>
         </div>
-
     }
     <br />
     <div class="col-12">
@@ -98,7 +97,7 @@
                     </td>
 
                     <td>@item.Price din</td>
-                    @if (User.IsInRole(Roles.Admin))
+                    @if (User.IsInRole(Roles.Admin) && item.FreePlaces > 0)
                     {
                         <td class="text-right">
                             <div class="btn-group">
@@ -107,7 +106,16 @@
                             </div>
                         </td>
                     }
-                    else if (User.IsInRole(Roles.Visitor))
+                    else if (User.IsInRole(Roles.Admin)&& item.FreePlaces==0)
+                    {
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a type="button"  class="btn btn-primary disabled" href="/Package/Apply/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                                <a type="button" class="btn btn-primary" href="/Package/Edit/@item.PackageId"><i class="fa-solid fa-pen"></i></a>
+                            </div>
+                        </td>
+                    }
+                    else if (User.IsInRole(Roles.Visitor) && item.FreePlaces>0)
                     {
                         <td class="text-right">
                             <div class="btn-group">
@@ -115,11 +123,11 @@
                             </div>
                         </td>
                     }
-                    else
+                    else if (User.IsInRole(Roles.Visitor) && item.FreePlaces == 0)
                     {
                         <td class="text-right">
                             <div class="btn-group">
-                                <a type="button" class="btn btn-primary" href="/Auth/Login/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
+                                <a type="button" class="btn btn-primary disabled" href="/Auth/Login/@item.PackageId"><i class="fa-solid fa-user-plus"></i></a>
                             </div>
                         </td>
                     }
