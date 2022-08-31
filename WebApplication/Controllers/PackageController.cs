@@ -20,40 +20,29 @@ namespace WebApplication.Controllers
         private readonly IUnitOfWork uow;
         private readonly IWebHostEnvironment hostingEnvironment;
         private readonly IHttpContextAccessor httpContextAccessor;
-        
+
 
         [BindProperty]
         public PackageViewModel PackageVm { get; set; }
 
-        public PackageController(IUnitOfWork iow,IWebHostEnvironment web,IHttpContextAccessor accessor)
+        public PackageController(IUnitOfWork iow, IWebHostEnvironment web, IHttpContextAccessor accessor)
         {
             this.uow = iow;
             this.hostingEnvironment = web;
             this.httpContextAccessor = accessor;
         }
 
-
-
-        public IActionResult Index(string searchString, string sortOrder,string sortOrderDate, int pageNumber = 1, int pageSize = 3)
+        public IActionResult Index2(string searchString, string sortOrder,string sortOrderDate, int pageNumber = 1, int pageSize = 3)
         {
 
             ViewBag.CurrentSortOrder = sortOrder;
             ViewBag.CurrentFilter = searchString;
-
-
-            ViewBag.AgeSortParam = string.IsNullOrEmpty(sortOrder) ? "age_desc" : "";
-            ViewBag.DateSortParam = string.IsNullOrEmpty(sortOrderDate) ? "date_desc" : "";
+            ViewBag.AgeSortParam = String.IsNullOrEmpty(sortOrder) ? "age_desc" : "";
 
             int ExcludeRecords = (pageNumber * pageSize) - pageSize;
 
             var model = from a in uow.PackageRepository.GetAll() select a;
             var packageCount = model.Count();
-
-
-            if(sortOrder == null && sortOrderDate == null)
-            {
-                model = model.OrderByDescending(b => b.DateTime);
-            }
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -61,34 +50,15 @@ namespace WebApplication.Controllers
                 packageCount = model.Count();
             }
 
-            if (sortOrderDate != null && sortOrder == null)
+            switch (sortOrder)
             {
-                switch (sortOrderDate)
-                {
-                    case "date_desc":
-                        model = model.OrderByDescending(b => b.DateTime);
-                        break;
-                    default:
-                        model = model.OrderBy(b => b.DateTime);
-                        break;
-                }
+                case "age_desc":
+                    model = model.OrderByDescending(b => b.Price);
+                    break;
+                default:
+                    model = model.OrderBy(b => b.Price);
+                    break;
             }
-
-            if (sortOrder != null && sortOrderDate == null)
-            {
-                switch (sortOrder)
-                {
-                    case "age_desc":
-                        model = model.OrderByDescending(b => b.Price);
-                        break;
-                    default:
-                        model = model.OrderBy(b => b.Price);
-                        break;
-                }
-            }
-
-
-
 
             model = model.Skip(ExcludeRecords).Take(pageSize);
 
@@ -99,7 +69,7 @@ namespace WebApplication.Controllers
                 Name = m.Name,
                 Duration = m.DurationInHours,
                 PackageId = m.PackageId,
-                ImagePath =m.ImagePath,
+                ImagePath = m.ImagePath,
                 Price = m.Price,
                 FreePlaces = m.FreePlaces,
                 DateTime = m.DateTime,
@@ -120,8 +90,205 @@ namespace WebApplication.Controllers
             };
 
 
-            return View(result);
+            return View("Index",result);
         }
+
+        public IActionResult Index(string searchString, string sortOrder, string sortOrderDate, int pageNumber = 1, int pageSize = 3)
+        {
+
+            ViewBag.CurrentSortOrder = sortOrderDate ;
+            ViewBag.CurrentFilter = searchString;
+            ViewBag.DateSortParam = String.IsNullOrEmpty(sortOrderDate) ? "date_asc":"";
+
+            int ExcludeRecords = (pageNumber * pageSize) - pageSize;
+
+            var model = from a in uow.PackageRepository.GetAll() select a;
+            var packageCount = model.Count();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(a => a.Name.ToUpper().Contains(searchString.ToUpper()));
+                packageCount = model.Count();
+            }
+
+            switch (sortOrderDate)
+            {
+                case "date_asc":
+                    model = model.OrderBy(b => b.DateTime);
+                    break;
+                default:
+                    model = model.OrderByDescending(b => b.DateTime);
+                    break;
+            }
+
+            model = model.Skip(ExcludeRecords).Take(pageSize);
+
+            List<PackageViewModel> list = new List<PackageViewModel>();
+
+            list = model.Select(m => new PackageViewModel()
+            {
+                Name = m.Name,
+                Duration = m.DurationInHours,
+                PackageId = m.PackageId,
+                ImagePath = m.ImagePath,
+                Price = m.Price,
+                FreePlaces = m.FreePlaces,
+                DateTime = m.DateTime,
+                Animals = m.Animals.Select(a => new SelectListItem(a.Type, a.Id.ToString())).ToList()
+
+            }).ToList();
+
+
+
+
+
+            var result = new PagedResult<PackageViewModel>
+            {
+                Data = list,
+                TotalItems = packageCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+
+            return View("Index", result);
+        }
+
+        /* public IActionResult Index(string searchString, string sortOrder,string so, int pageNumber = 1, int pageSize = 3)
+         {
+
+             ViewBag.CurrentSortOrder = sortOrder;
+             ViewBag.CurrentFilter = searchString;
+
+
+             ViewBag.AgeSortParam = string.IsNullOrEmpty(sortOrder) ? "age_desc" : "";
+
+             int ExcludeRecords = (pageNumber * pageSize) - pageSize;
+
+             var model = from a in uow.PackageRepository.GetAll() select a;
+             var packageCount = model.Count();
+
+
+             if (!string.IsNullOrEmpty(searchString))
+             {
+                 model = model.Where(a => a.Name.ToUpper().Contains(searchString.ToUpper()));
+                 packageCount = model.Count();
+             }
+
+             switch (sortOrder)
+             {
+                 case "age_desc":
+                     model = model.OrderByDescending(b => b.Price);
+                     break;
+                 default:
+                     model = model.OrderBy(b => b.Price);
+                     break;
+             }
+
+             model = model.Skip(ExcludeRecords).Take(pageSize);
+
+             List<PackageViewModel> list = new List<PackageViewModel>();
+
+             list = model.Select(m => new PackageViewModel()
+             {
+                 Name = m.Name,
+                 Duration = m.DurationInHours,
+                 PackageId = m.PackageId,
+                 ImagePath = m.ImagePath,
+                 Price = m.Price,
+                 FreePlaces = m.FreePlaces,
+                 DateTime = m.DateTime,
+                 Animals = m.Animals.Select(a => new SelectListItem(a.Type, a.Id.ToString())).ToList()
+
+             }).ToList();
+
+
+
+
+
+             var result = new PagedResult<PackageViewModel>
+             {
+                 Data = list,
+                 TotalItems = packageCount,
+                 PageNumber = pageNumber,
+                 PageSize = pageSize
+             };
+
+
+             return View(result);
+         }*/
+
+        /*  public IActionResult Index2(string searchString, string sortOrderDate, int pageNumber = 1, int pageSize = 3)
+          {
+
+              //ViewBag.CurrentSortOrder = sortOrder;
+              ViewBag.CurrentFilter = searchString;
+
+
+
+              ViewBag.DateSortParam = string.IsNullOrEmpty(sortOrderDate) ? "date_desc" : "";
+
+              int ExcludeRecords = (pageNumber * pageSize) - pageSize;
+
+              var model = from a in uow.PackageRepository.GetAll() select a;
+              var packageCount = model.Count();
+
+
+
+              if (!string.IsNullOrEmpty(searchString))
+              {
+                  model = model.Where(a => a.Name.ToUpper().Contains(searchString.ToUpper()));
+                  packageCount = model.Count();
+              }
+
+
+              switch (sortOrderDate)
+              {
+                  case "date_desc":
+                      model = model.OrderByDescending(b => b.DateTime);
+                      break;
+                  default:
+                      model = model.OrderBy(b => b.DateTime);
+                      break;
+              }
+
+
+
+
+              model = model.Skip(ExcludeRecords).Take(pageSize);
+
+              List<PackageViewModel> list = new List<PackageViewModel>();
+
+              list = model.Select(m => new PackageViewModel()
+              {
+                  Name = m.Name,
+                  Duration = m.DurationInHours,
+                  PackageId = m.PackageId,
+                  ImagePath = m.ImagePath,
+                  Price = m.Price,
+                  FreePlaces = m.FreePlaces,
+                  DateTime = m.DateTime,
+                  Animals = m.Animals.Select(a => new SelectListItem(a.Type, a.Id.ToString())).ToList()
+
+              }).ToList();
+
+
+
+
+
+              var result = new PagedResult<PackageViewModel>
+              {
+                  Data = list,
+                  TotalItems = packageCount,
+                  PageNumber = pageNumber,
+                  PageSize = pageSize
+              };
+
+
+              return RedirectToAction("Index",result);
+
+          }
+  */
 
 
         public IActionResult Create()
@@ -131,7 +298,7 @@ namespace WebApplication.Controllers
 
             vm.Animals = new List<SelectListItem>();
             vm.OtherAnimals = allAnimals.Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.Type }).ToList();
-            
+
 
             return View(vm);
         }
@@ -212,8 +379,8 @@ namespace WebApplication.Controllers
             p.DateTime = v.DateTime;
             //ovde ide punjenje zivotinja za paket
             List<Animal> animals = new List<Animal>();
-            
-           foreach(int num in v.NewAnimalsInPackage)
+
+            foreach (int num in v.NewAnimalsInPackage)
             {
                 animals.Add(uow.AnimalRepository.SearchById(num));
             }
@@ -260,7 +427,7 @@ namespace WebApplication.Controllers
         {
 
             Package p = uow.PackageRepository.SearchById(id);
-           var userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             var user = uow.UserRepository.SearchById(userId);
 
@@ -271,7 +438,7 @@ namespace WebApplication.Controllers
             vm.FreePlaces = p.FreePlaces;
             vm.UserName = user.FirstName;
             vm.UserLastName = user.LastName;
-            vm.Animals = p.Animals.Select(a=>new SelectListItem() {Text=a.Type,Value=a.Id.ToString() }).ToList();
+            vm.Animals = p.Animals.Select(a => new SelectListItem() { Text = a.Type, Value = a.Id.ToString() }).ToList();
 
             return View(vm);
         }
@@ -283,13 +450,13 @@ namespace WebApplication.Controllers
             p.FreePlaces -= vm.NumerOfPersons;
 
             User u = uow.UserRepository.SearchById(int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value));
-           
-            u.PUs.Add(new PU() {Package=p,User=u,TimeOfReservation=DateTime.Now });
-            
+
+            u.PUs.Add(new PU() { Package = p, User = u, TimeOfReservation = DateTime.Now });
+
 
 
             uow.Save();
-            
+
 
             return RedirectToAction("Index");
         }
