@@ -38,6 +38,7 @@ namespace WebApplication.Models
         public string ImagePath { get; set; }
         public double Price { get; set; }
         public int FreePlaces { get; set; }
+        public bool Checked { get; set; }
 
 
         //[Range(typeof(DateTime), "12/12/2063 12:00:00 AM", "12/12/2063 12:00:00 AM",ErrorMessage = "Greska")]
