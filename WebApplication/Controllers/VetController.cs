@@ -51,7 +51,10 @@ namespace WebApplication.Controllers
 
             uow.VetRepository.Add(new Vet()
             {
-                VName = vet.VName
+                VName = vet.VName,
+                JMBG = vet.JMBG,
+                DateOfBIrth = vet.DateOfBirth,
+                PhoneNumber = vet.PhoneNumber,
             });
 
             uow.Save();
