@@ -33,13 +33,13 @@ namespace WebApplication.Controllers
             this.httpContextAccessor = accessor;
         }
 
-        public IActionResult Index2(string searchString, string sortOrder,string sortOrderDate, int pageNumber = 1, int pageSize = 3)
+        public IActionResult Index2(string searchString, string sortOrder, string sortOrderDate, int pageNumber = 1, int pageSize = 3)
         {
 
             ViewBag.CurrentSortOrder = sortOrder;
             ViewBag.CurrentFilter = searchString;
             ViewBag.AgeSortParam = String.IsNullOrEmpty(sortOrder) ? "age_desc" : "";
-            
+
 
             int ExcludeRecords = (pageNumber * pageSize) - pageSize;
 
@@ -92,15 +92,15 @@ namespace WebApplication.Controllers
             };
 
 
-            return View("Index",result);
+            return View("Index", result);
         }
 
-        public IActionResult Index(bool isChecked,string searchString, string checkBox, string sortOrder, string sortOrderDate, int pageNumber = 1, int pageSize = 3)
+        public IActionResult Index(bool isChecked, string searchString, string checkBox, string sortOrder, string sortOrderDate, int pageNumber = 1, int pageSize = 3)
         {
 
-            ViewBag.CurrentSortOrder = sortOrderDate ;
+            ViewBag.CurrentSortOrder = sortOrderDate;
             ViewBag.CurrentFilter = searchString;
-            ViewBag.DateSortParam = String.IsNullOrEmpty(sortOrderDate) ? "date_asc":"";
+            ViewBag.DateSortParam = String.IsNullOrEmpty(sortOrderDate) ? "date_asc" : "";
             ViewBag.CheckBox = string.IsNullOrEmpty(checkBox) ? "checked" : " ";
 
             int ExcludeRecords = (pageNumber * pageSize) - pageSize;
@@ -113,9 +113,27 @@ namespace WebApplication.Controllers
 
             if (isChecked)
             {
-                model = model.Where(a => a.FreePlaces > 0);
-                packageCount = model.Count();
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    model = model.Where(a => a.Name.ToUpper().Contains(searchString.ToUpper()));
+                    model = model.Where(a => a.FreePlaces > 0);
+                    packageCount = model.Count();
+                }
+                else
+                {
+                    model = model.Where(a => a.FreePlaces > 0);
+                    packageCount = model.Count();
+                }
             }
+            else
+            {
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    model = model.Where(a => a.Name.ToUpper().Contains(searchString.ToUpper()));
+                    packageCount = model.Count();
+                }
+            }
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(a => a.Name.ToUpper().Contains(searchString.ToUpper()));
